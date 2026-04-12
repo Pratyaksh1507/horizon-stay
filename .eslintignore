@@ -1,0 +1,11 @@
+dist
+src/features/cabins/CabinRow-v1.jsx
+src/features/cabins/CabinTable-v1.jsx
+src/features/cabins/CabinTable-v2.jsx
+src/features/cabins/CreateCabinForm copy.jsx
+src/features/check-in-out/TodayActivity.jsx
+src/features/check-in-out/TodayItem.jsx
+src/features/dashboard/DashboardLayout.jsx
+src/features/dashboard/DurationChart.jsx
+src/features/dashboard/SalesChart.jsx
+src/ui/ErrorFallback.jsx
