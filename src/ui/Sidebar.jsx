@@ -177,8 +177,8 @@ const NAV_ITEMS = [
 function Sidebar() {
   return (
     <StyledSidebar>
-      {/* Brand */}
-      <Brand>
+      {/* Brand — clickable, goes to dashboard */}
+      <Brand as={Link} to="/dashboard" style={{ textDecoration: "none" }}>
         <BrandInner>
           <LogoImg src="/horizon-stay-logo.png" alt="Horizon Stay Logo" />
           <BrandText>
@@ -201,18 +201,6 @@ function Sidebar() {
           ))}
         </NavList>
       </NavSection>
-
-      {/* Bottom actions */}
-      <BottomSection>
-        <NewBookingBtn to="/bookings">
-          <HiOutlinePlus />
-          New Booking
-        </NewBookingBtn>
-        <HelpLink to="/settings">
-          <HiOutlineQuestionMarkCircle />
-          Help Center
-        </HelpLink>
-      </BottomSection>
 
       {/* User */}
       <UserSection>
