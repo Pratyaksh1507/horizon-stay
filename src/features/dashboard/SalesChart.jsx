@@ -13,7 +13,7 @@ import styled from "styled-components";
 import DashboardBox from "./DashboardBox";
 import Heading from "../../ui/Heading";
 import { formatCurrency } from "../../utils/helpers";
-import { useLocalStorageState } from "../../hooks/useLocalStorageState";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
@@ -26,14 +26,14 @@ const StyledSalesChart = styled(DashboardBox)`
 `;
 
 function SalesChart({ bookings, numDays }) {
-  const [isDarkMode] = useLocalStorageState(false, "isDarkMode");
+  const { isDarkMode } = useDarkMode();
 
   const colors = isDarkMode
     ? {
-        totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
-        extrasSales: { stroke: "#22c55e", fill: "#22c55e" },
-        text: "#e5e7eb",
-        background: "#18212f",
+        totalSales: { stroke: "#818cf8", fill: "#4f46e520" },
+        extrasSales: { stroke: "#34d399", fill: "#10b98120" },
+        text: "#a0a0c0",
+        background: "#111118",
       }
     : {
         totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },

@@ -37,15 +37,11 @@ const NavBrand = styled.div`
   gap: 1.2rem;
 `;
 
-const BrandIcon = styled.div`
+const BrandLogo = styled.img`
   width: 3.6rem;
   height: 3.6rem;
-  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  object-fit: contain;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
 `;
 
 const BrandName = styled.span`
@@ -268,12 +264,12 @@ function LandingPage() {
     <Page>
       <Nav>
         <NavBrand>
-          <BrandIcon>🏨</BrandIcon>
+          <BrandLogo src="/horizon-stay-logo.png" alt="Horizon Stay" />
           <BrandName>HORIZON STAY</BrandName>
         </NavBrand>
         <NavActions>
           <GhubLink
-            href="https://github.com/Pratyaksh1507"
+            href="https://github.com/Pratyaksh1507/horizon-stay"
             target="_blank"
             rel="noopener noreferrer"
           >

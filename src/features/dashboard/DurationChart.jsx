@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import styled from "styled-components";
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import Heading from "../../ui/Heading";
-import { useLocalStorageState } from "../../hooks/useLocalStorageState";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 const ChartBox = styled.div`
   /* Box */
@@ -70,7 +70,7 @@ function prepareData(startData, stays) {
 }
 
 function DurationChart({ confirmedStays }) {
-  const [isDarkMode] = useLocalStorageState(false, "isDarkMode");
+  const { isDarkMode } = useDarkMode();
   const startData = isDarkMode ? startDataDark : startDataLight;
 
   const data = useMemo(
