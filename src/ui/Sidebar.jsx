@@ -202,6 +202,18 @@ function Sidebar() {
         </NavList>
       </NavSection>
 
+      {/* Bottom actions */}
+      <BottomSection>
+        <NewBookingBtn to="/new-booking">
+          <HiOutlinePlus />
+          New Booking
+        </NewBookingBtn>
+        <HelpLink to="/help">
+          <HiOutlineQuestionMarkCircle />
+          Help Center
+        </HelpLink>
+      </BottomSection>
+
       {/* User */}
       <UserSection>
         <UserAvatar />

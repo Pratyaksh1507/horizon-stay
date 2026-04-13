@@ -18,6 +18,8 @@ import ProtectedRoute from "./ui/ProtectedRoute";
 import Checkin from "./pages/Checkin";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import LandingPage from "./pages/LandingPage";
+import NewBooking from "./pages/NewBooking";
+import HelpCenter from "./pages/HelpCenter";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,6 +54,8 @@ function App() {
               <Route path="users" element={<Users />} />
               <Route path="settings" element={<Settings />} />
               <Route path="account" element={<Account />} />
+              <Route path="new-booking" element={<NewBooking />} />
+              <Route path="help" element={<HelpCenter />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="*" element={<PageNotFound />} />
