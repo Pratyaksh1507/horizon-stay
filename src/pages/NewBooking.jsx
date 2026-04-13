@@ -1,11 +1,115 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCabins } from "../services/apiCabins";
 import supabase from "../services/supabase";
 import toast from "react-hot-toast";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+/* Dark themed calendar override */
+const CalendarStyles = createGlobalStyle`
+  .react-datepicker {
+    font-family: "Inter", sans-serif;
+    background: var(--color-grey-0);
+    border: 1px solid var(--color-grey-100);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
+
+  .react-datepicker__header {
+    background: var(--color-grey-0);
+    border-bottom: 1px solid var(--color-grey-100);
+    padding-top: 1.2rem;
+  }
+
+  .react-datepicker__current-month {
+    color: var(--color-grey-900);
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .react-datepicker__day-name {
+    color: var(--color-grey-500);
+    font-weight: 600;
+    font-size: 1.2rem;
+    width: 3.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .react-datepicker__day {
+    color: var(--color-grey-700);
+    font-size: 1.4rem;
+    width: 3.6rem;
+    height: 3.6rem;
+    line-height: 3.6rem;
+    border-radius: 8px;
+    margin: 0.2rem;
+    transition: all 0.15s;
+
+    &:hover {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--color-grey-900);
+    }
+  }
+
+  .react-datepicker__day--selected,
+  .react-datepicker__day--keyboard-selected {
+    background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+    color: white !important;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.35);
+  }
+
+  .react-datepicker__day--today {
+    border: 1.5px solid #6366f1;
+    font-weight: 600;
+    color: #818cf8;
+  }
+
+  .react-datepicker__day--disabled {
+    color: var(--color-grey-300) !important;
+    cursor: not-allowed;
+  }
+
+  .react-datepicker__day--outside-month {
+    color: var(--color-grey-400);
+    opacity: 0.4;
+  }
+
+  .react-datepicker__navigation {
+    top: 1.2rem;
+  }
+
+  .react-datepicker__navigation-icon::before {
+    border-color: var(--color-grey-500);
+    border-width: 2px 2px 0 0;
+    height: 8px;
+    width: 8px;
+  }
+
+  .react-datepicker__navigation:hover *::before {
+    border-color: #6366f1;
+  }
+
+  .react-datepicker__triangle {
+    display: none;
+  }
+
+  .react-datepicker__month {
+    margin: 0.8rem;
+  }
+
+  .react-datepicker-popper {
+    z-index: 100;
+  }
+`;
 
 const Form = styled.form`
   background-color: var(--color-grey-0);
@@ -172,6 +276,9 @@ const COUNTRIES = [
 
 function NewBooking() {
   const queryClient = useQueryClient();
+  const [checkIn, setCheckIn] = useState(null);
+  const [checkOut, setCheckOut] = useState(null);
+
   const { data: cabins = [], isLoading: cabinsLoading } = useQuery({
     queryKey: ["cabins"],
     queryFn: getCabins,
@@ -216,16 +323,15 @@ function NewBooking() {
       // Create booking
       const cabin = cabins.find((c) => c.id === Number(data.cabinId));
       const numNights =
-        Math.ceil(
-          (new Date(data.endDate) - new Date(data.startDate)) /
-            (1000 * 60 * 60 * 24)
-        ) || 1;
+        checkIn && checkOut
+          ? Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)) || 1
+          : 1;
       const cabinPrice = (cabin?.regularPrice || 0) * numNights;
 
       const { error } = await supabase.from("bookings").insert([
         {
-          startDate: data.startDate,
-          endDate: data.endDate,
+          startDate: checkIn?.toISOString(),
+          endDate: checkOut?.toISOString(),
           numNights,
           numGuests: Number(data.numGuests) || 1,
           cabinPrice,
@@ -254,6 +360,7 @@ function NewBooking() {
 
   return (
     <>
+      <CalendarStyles />
       <Row type="horizontal">
         <Heading as="h1">New Booking</Heading>
       </Row>
@@ -322,21 +429,31 @@ function NewBooking() {
           </FieldGroup>
           <FieldGroup>
             <Label>Check-in Date</Label>
-            <Input
-              type="date"
-              {...register("startDate", { required: "Check-in date required" })}
+            <DatePicker
+              selected={checkIn}
+              onChange={(date) => setCheckIn(date)}
+              selectsStart
+              startDate={checkIn}
+              endDate={checkOut}
+              minDate={new Date()}
+              placeholderText="Select check-in"
+              dateFormat="MMM dd, yyyy"
+              customInput={<Input readOnly style={{ cursor: "pointer" }} />}
             />
-            {errors.startDate && (
-              <ErrorMsg>{errors.startDate.message}</ErrorMsg>
-            )}
           </FieldGroup>
           <FieldGroup>
             <Label>Check-out Date</Label>
-            <Input
-              type="date"
-              {...register("endDate", { required: "Check-out date required" })}
+            <DatePicker
+              selected={checkOut}
+              onChange={(date) => setCheckOut(date)}
+              selectsEnd
+              startDate={checkIn}
+              endDate={checkOut}
+              minDate={checkIn || new Date()}
+              placeholderText="Select check-out"
+              dateFormat="MMM dd, yyyy"
+              customInput={<Input readOnly style={{ cursor: "pointer" }} />}
             />
-            {errors.endDate && <ErrorMsg>{errors.endDate.message}</ErrorMsg>}
           </FieldGroup>
         </FormGrid>
 
