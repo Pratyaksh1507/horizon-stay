@@ -1,10 +1,10 @@
-import styled from "styled-components";
-const Input = styled.input`
-  border: 1px solid var(--color-grey-300);
-  background-color: var(--color-grey-0);
-  border-radius: var(--border-radius-sm);
-  padding: 0.8rem 1.2rem;
-  box-shadow: var(--shadow-sm);
-`;
+function Input({ ...props }) {
+  return (
+    <input
+      className="border border-zinc-700 bg-zinc-800 rounded-lg px-3 py-2 text-[1.35rem] shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 transition-all duration-200"
+      {...props}
+    />
+  );
+}
 
 export default Input;

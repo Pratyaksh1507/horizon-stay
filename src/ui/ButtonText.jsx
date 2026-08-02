@@ -1,18 +1,18 @@
-import styled from 'styled-components';
+import { motion } from "framer-motion";
 
-const ButtonText = styled.button`
-  color: var(--color-brand-600);
-  font-weight: 500;
-  text-align: center;
-  transition: all 0.3s;
-  background: none;
-  border: none;
-  border-radius: var(--border-radius-sm);
-
-  &:hover,
-  &:active {
-    color: var(--color-brand-700);
-  }
-`;
+function ButtonText({ children, onClick, disabled, ...props }) {
+  return (
+    <motion.button
+      onClick={onClick}
+      disabled={disabled}
+      className="text-brand-500 font-medium text-center bg-none border-none rounded-lg transition-all duration-200 hover:text-brand-400 disabled:opacity-50"
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      {...props}
+    >
+      {children}
+    </motion.button>
+  );
+}
 
 export default ButtonText;

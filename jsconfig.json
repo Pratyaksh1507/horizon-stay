@@ -5,12 +5,15 @@
     "jsx": "react-jsx",
     "baseUrl": "src",
     "paths": {
+      "@/*": ["*"],
       "ui/*": ["ui/*"],
       "features/*": ["features/*"],
       "services/*": ["services/*"],
       "hooks/*": ["hooks/*"],
       "utils/*": ["utils/*"],
-      "data/*": ["data/*"]
+      "data/*": ["data/*"],
+      "components/*": ["components/*"],
+      "lib/*": ["lib/*"]
     }
   },
   "include": ["src"]

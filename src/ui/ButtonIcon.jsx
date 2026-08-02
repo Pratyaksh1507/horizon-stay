@@ -1,21 +1,18 @@
-import styled from "styled-components";
+import { motion } from "framer-motion";
 
-const ButtonIcon = styled.button`
-  background: none;
-  border: none;
-  padding: 0.6rem;
-  border-radius: var(--border-radius-sm);
-  transition: all 0.2s;
-
-  &:hover {
-    background-color: var(--color-grey-100);
-  }
-
-  & svg {
-    width: 2.2rem;
-    height: 2.2rem;
-    color: var(--color-brand-600);
-  }
-`;
+function ButtonIcon({ children, onClick, disabled, title, className = "" }) {
+  return (
+    <motion.button
+      onClick={onClick}
+      disabled={disabled}
+      title={title}
+      className={`p-2.5 rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors duration-200 ${className}`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      {children}
+    </motion.button>
+  );
+}
 
 export default ButtonIcon;

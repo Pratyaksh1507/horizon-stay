@@ -1,61 +1,40 @@
-import styled from "styled-components";
 import { format } from "date-fns";
 import { HiArrowRightOnRectangle } from "react-icons/hi2";
-import ButtonIcon from "./ButtonIcon";
+import { motion } from "framer-motion";
 import { useLogout } from "../features/authentication/useLogout";
 import DarkModeToggle from "./DarkModeToggle";
-
-const StyledHeader = styled.header`
-  background-color: var(--color-grey-0);
-  padding: 0 3.2rem;
-  border-bottom: 1px solid var(--color-grey-100);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 6.4rem;
-  grid-column: 2;
-`;
-
-const PageTitle = styled.h2`
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--color-grey-900);
-  letter-spacing: -0.02em;
-`;
-
-const RightGroup = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-`;
-
-const DateBadge = styled.span`
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-grey-500);
-  padding: 0.5rem 1.2rem;
-  background: var(--color-grey-100);
-  border-radius: 100px;
-  margin-right: 0.8rem;
-`;
 
 function Header() {
   const { logout, isPending } = useLogout();
 
   return (
-    <StyledHeader>
-      <PageTitle>Dashboard</PageTitle>
+    <motion.header
+      className="bg-zinc-900 px-8 border-b border-zinc-800 flex items-center justify-between h-16"
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
+      <h2 className="text-[1.8rem] font-bold text-zinc-100 tracking-tight">
+        Dashboard
+      </h2>
 
-      <RightGroup>
-        <DateBadge>{format(new Date(), "MMM dd, yyyy").toUpperCase()}</DateBadge>
+      <div className="flex items-center gap-2">
+        <span className="text-[1.15rem] font-semibold tracking-[0.1em] uppercase text-zinc-500 px-3 py-1.5 bg-zinc-800 rounded-full">
+          {format(new Date(), "MMM dd, yyyy")}
+        </span>
         <DarkModeToggle />
-        <ButtonIcon onClick={logout} disabled={isPending} title="Log out">
-          <HiArrowRightOnRectangle />
-        </ButtonIcon>
-      </RightGroup>
-    </StyledHeader>
+        <motion.button
+          onClick={logout}
+          disabled={isPending}
+          title="Log out"
+          className="p-2.5 rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors duration-200"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <HiArrowRightOnRectangle className="w-5 h-5" />
+        </motion.button>
+      </div>
+    </motion.header>
   );
 }
 

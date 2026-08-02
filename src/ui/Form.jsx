@@ -1,28 +1,19 @@
-import styled, { css } from "styled-components";
-
-const Form = styled.form`
-  ${(props) =>
-    props.type === "regular" &&
-    css`
-      padding: 2.4rem 4rem;
-
-      /* Box */
-      background-color: var(--color-grey-0);
-      border: 1px solid var(--color-grey-100);
-      border-radius: var(--border-radius-md);
-    `}
-
-  ${(props) =>
-    props.type === "modal" &&
-    css`
-      width: 80rem;
-    `}
-    
-  overflow: hidden;
-  font-size: 1.4rem;
-`;
-Form.defaultProps = {
-  type: "regular",
-};
+function Form({ children, type = "regular", onSubmit, ...props }) {
+  return (
+    <form
+      onSubmit={onSubmit}
+      className={`overflow-hidden text-[1.35rem] ${
+        type === "regular"
+          ? "p-6 bg-zinc-900 border border-zinc-800 rounded-xl"
+          : type === "modal"
+          ? "w-[80rem]"
+          : ""
+      }`}
+      {...props}
+    >
+      {children}
+    </form>
+  );
+}
 
 export default Form;

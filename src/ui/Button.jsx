@@ -1,75 +1,39 @@
-import styled, { css } from "styled-components";
+import { motion } from "framer-motion";
 
 const sizes = {
-  small: css`
-    font-size: 1.2rem;
-    padding: 0.4rem 0.8rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    text-align: center;
-  `,
-  medium: css`
-    font-size: 1.4rem;
-    padding: 1.2rem 1.6rem;
-    font-weight: 500;
-  `,
-  large: css`
-    font-size: 1.6rem;
-    padding: 1.2rem 2.4rem;
-    font-weight: 500;
-  `,
+  small: "text-[1.1rem] px-2 py-1 uppercase font-semibold text-center",
+  medium: "text-[1.35rem] px-4 py-3 font-medium",
+  large: "text-[1.5rem] px-6 py-3 font-medium",
 };
 
 const variations = {
-  primary: css`
-    color: var(--color-brand-50);
-    background-color: var(--color-brand-600);
-
-    &:hover {
-      background-color: var(--color-brand-700);
-    }
-  `,
-  secondary: css`
-    color: var(--color-grey-600);
-    background: var(--color-grey-0);
-    border: 1px solid var(--color-grey-200);
-
-    &:hover {
-      background-color: var(--color-grey-50);
-    }
-  `,
-  danger: css`
-    color: var(--color-red-100);
-    background-color: var(--color-red-700);
-
-    &:hover {
-      background-color: var(--color-red-800);
-    }
-  `,
+  primary: "bg-brand-600 text-white hover:bg-brand-700",
+  secondary: "bg-zinc-900 text-zinc-400 border border-zinc-700 hover:bg-zinc-800 hover:text-zinc-200",
+  danger: "bg-red-600 text-red-100 hover:bg-red-700",
 };
-
-const StyledButton = styled.button`
-  border: none;
-  border-radius: var(--border-radius-sm);
-  box-shadow: var(--shadow-sm);
-
-  ${(props) => sizes[props.$size]}
-  ${(props) => variations[props.$variation]}
-`;
 
 function Button({
   variation = "primary",
   size = "medium",
   type = "button",
+  disabled,
+  onClick,
+  children,
+  className = "",
   ...props
 }) {
   return (
-    <StyledButton
+    <motion.button
       type={type}
-      $variation={variation}
-      $size={size}
+      disabled={disabled}
+      onClick={onClick}
+      className={`rounded-lg shadow-sm transition-all duration-200 ${sizes[size]} ${variations[variation]} ${className}`}
+      whileHover={{ scale: disabled ? 1 : 1.02 }}
+      whileTap={{ scale: disabled ? 1 : 0.98 }}
       {...props}
-    />
+    >
+      {children}
+    </motion.button>
   );
 }
 

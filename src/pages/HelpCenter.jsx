@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import {
   HiOutlineEnvelope,
   HiOutlineDocumentText,
@@ -7,132 +6,6 @@ import {
   HiOutlineQuestionMarkCircle,
   HiOutlineArrowTopRightOnSquare,
 } from "react-icons/hi2";
-import Heading from "../ui/Heading";
-import Row from "../ui/Row";
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
-  gap: 2rem;
-`;
-
-const Card = styled.a`
-  background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-100);
-  border-radius: var(--border-radius-md);
-  padding: 2.8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  text-decoration: none;
-  transition: all 0.2s;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    border-color: rgba(99, 102, 241, 0.3);
-  }
-`;
-
-const IconRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const IconBox = styled.div`
-  width: 4.4rem;
-  height: 4.4rem;
-  border-radius: var(--border-radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: ${({ color }) =>
-    `linear-gradient(135deg, ${color}30, ${color}10)`};
-
-  svg {
-    width: 2.2rem;
-    height: 2.2rem;
-    color: ${({ color }) => color};
-  }
-`;
-
-const ExternalIcon = styled(HiOutlineArrowTopRightOnSquare)`
-  width: 1.6rem;
-  height: 1.6rem;
-  color: var(--color-grey-400);
-`;
-
-const CardTitle = styled.h3`
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--color-grey-800);
-`;
-
-const CardDesc = styled.p`
-  font-size: 1.4rem;
-  color: var(--color-grey-500);
-  line-height: 1.5;
-`;
-
-const Divider = styled.hr`
-  border: none;
-  border-top: 1px solid var(--color-grey-100);
-  margin: 1.2rem 0;
-`;
-
-const FAQSection = styled.div`
-  background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-100);
-  border-radius: var(--border-radius-md);
-  padding: 3.2rem;
-`;
-
-const FAQItem = styled.details`
-  padding: 1.6rem 0;
-  border-bottom: 1px solid var(--color-grey-100);
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  summary {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--color-grey-800);
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    &::-webkit-details-marker {
-      display: none;
-    }
-
-    &::before {
-      content: "+";
-      font-size: 1.8rem;
-      color: var(--color-brand-500);
-      font-weight: 700;
-      width: 2rem;
-      text-align: center;
-    }
-  }
-
-  &[open] summary::before {
-    content: "−";
-  }
-
-  p {
-    margin-top: 1rem;
-    padding-left: 3rem;
-    font-size: 1.4rem;
-    color: var(--color-grey-500);
-    line-height: 1.6;
-  }
-`;
 
 const RESOURCES = [
   {
@@ -190,49 +63,60 @@ const FAQS = [
 
 function HelpCenter() {
   return (
-    <>
-      <Row type="horizontal">
-        <Heading as="h1">Help Center</Heading>
-      </Row>
+    <div>
+      <h1 className="text-[2.2rem] font-bold text-zinc-100 tracking-tight mb-6">
+        Help Center
+      </h1>
 
-      <Grid>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(30rem,1fr))] gap-5">
         {RESOURCES.map((r) => (
-          <Card
+          <a
             key={r.title}
             href={r.href}
             target="_blank"
             rel="noopener noreferrer"
+            className="bg-zinc-900 border border-zinc-800 rounded-xl p-7 flex flex-col gap-3 no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:shadow-black/20 hover:border-brand-500/30"
           >
-            <IconRow>
-              <IconBox color={r.color}>{r.icon}</IconBox>
-              <ExternalIcon />
-            </IconRow>
-            <CardTitle>{r.title}</CardTitle>
-            <CardDesc>{r.desc}</CardDesc>
-          </Card>
+            <div className="flex items-center justify-between">
+              <div
+                className="w-11 h-11 rounded-lg flex items-center justify-center"
+                style={{
+                  background: `linear-gradient(135deg, ${r.color}30, ${r.color}10)`,
+                }}
+              >
+                <span style={{ color: r.color }} className="w-[2.2rem] h-[2.2rem]">
+                  {r.icon}
+                </span>
+              </div>
+              <HiOutlineArrowTopRightOnSquare className="w-4 h-4 text-zinc-500" />
+            </div>
+            <h3 className="text-[1.5rem] font-semibold text-zinc-200">{r.title}</h3>
+            <p className="text-[1.35rem] text-zinc-400 leading-relaxed">{r.desc}</p>
+          </a>
         ))}
-      </Grid>
+      </div>
 
-      <FAQSection>
-        <Heading as="h2">
-          <HiOutlineQuestionMarkCircle
-            style={{
-              display: "inline",
-              verticalAlign: "middle",
-              marginRight: "0.8rem",
-            }}
-          />
+      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-8 mt-6">
+        <h2 className="text-[1.8rem] font-semibold text-zinc-100 mb-4">
+          <HiOutlineQuestionMarkCircle className="inline align-middle mr-2 w-6 h-6" />
           Frequently Asked Questions
-        </Heading>
-        <Divider />
+        </h2>
+        <hr className="border-none border-t border-zinc-800 my-3" />
         {FAQS.map((faq) => (
-          <FAQItem key={faq.q}>
-            <summary>{faq.q}</summary>
-            <p>{faq.a}</p>
-          </FAQItem>
+          <details
+            key={faq.q}
+            className="py-4 border-b border-zinc-800 last:border-b-0 group"
+          >
+            <summary className="text-[1.45rem] font-semibold text-zinc-200 cursor-pointer list-none flex items-center gap-2.5 marker:hidden [&::-webkit-details-marker]:hidden before:content-['+'] before:text-[1.8rem] before:text-brand-500 before:font-bold before:w-5 before:text-center group-open:before:content-['−']">
+              {faq.q}
+            </summary>
+            <p className="mt-2 ml-8 text-[1.35rem] text-zinc-400 leading-relaxed">
+              {faq.a}
+            </p>
+          </details>
         ))}
-      </FAQSection>
-    </>
+      </div>
+    </div>
   );
 }
 

@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { NavLink, Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   HiOutlineHome,
   HiOutlineCalendarDays,
@@ -11,214 +11,118 @@ import {
 } from "react-icons/hi2";
 import UserAvatar from "../features/authentication/UserAvatar";
 
-/* ── Shell ── */
-const StyledSidebar = styled.aside`
-  background-color: var(--color-grey-0);
-  border-right: 1px solid var(--color-grey-100);
-  display: flex;
-  flex-direction: column;
-  grid-row: 1 / -1;
-  overflow-y: auto;
-`;
-
-/* ── Brand ── */
-const Brand = styled.div`
-  padding: 2rem 2rem 1.6rem;
-  border-bottom: 1px solid var(--color-grey-100);
-`;
-
-const BrandInner = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-`;
-
-const LogoImg = styled.img`
-  width: 4rem;
-  height: 4rem;
-  object-fit: contain;
-  border-radius: 8px;
-  flex-shrink: 0;
-`;
-
-const BrandText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-`;
-
-const BrandName = styled.h1`
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--color-grey-900);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-`;
-
-const BrandTagline = styled.p`
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-brand-500);
-`;
-
-/* ── Nav ── */
-const NavSection = styled.nav`
-  flex: 1;
-  padding: 1.6rem 1.2rem;
-  overflow-y: auto;
-`;
-
-const NavList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-`;
-
-const StyledNavLink = styled(NavLink)`
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-  padding: 1.1rem 1.4rem;
-  border-radius: var(--border-radius-sm);
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: var(--color-grey-500);
-  transition: all 0.2s;
-
-  svg {
-    width: 2rem;
-    height: 2rem;
-    flex-shrink: 0;
-    transition: color 0.2s;
-  }
-
-  &:hover {
-    color: var(--color-grey-800);
-    background-color: var(--color-grey-100);
-  }
-
-  &.active {
-    color: var(--color-grey-900);
-    background: linear-gradient(
-      135deg,
-      rgba(99, 102, 241, 0.15) 0%,
-      rgba(99, 102, 241, 0.06) 100%
-    );
-    border: 1px solid rgba(99, 102, 241, 0.2);
-
-    svg {
-      color: var(--color-brand-500);
-    }
-  }
-`;
-
-/* ── Bottom section ── */
-const BottomSection = styled.div`
-  padding: 1.6rem 1.2rem;
-  border-top: 1px solid var(--color-grey-100);
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-`;
-
-const NewBookingBtn = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  width: 100%;
-  padding: 1.1rem;
-  border-radius: var(--border-radius-sm);
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-  color: white;
-  font-size: 1.4rem;
-  font-weight: 600;
-  transition: all 0.2s;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-
-  svg { width: 1.8rem; height: 1.8rem; }
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
-  }
-`;
-
-const HelpLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.9rem 1.2rem;
-  border-radius: var(--border-radius-sm);
-  font-size: 1.4rem;
-  color: var(--color-grey-500);
-  transition: all 0.2s;
-
-  svg { width: 1.8rem; height: 1.8rem; }
-
-  &:hover { color: var(--color-grey-800); background-color: var(--color-grey-100); }
-`;
-
-const UserSection = styled.div`
-  padding: 1.4rem 1.2rem;
-  border-top: 1px solid var(--color-grey-100);
-`;
-
 const NAV_ITEMS = [
-  { to: "/dashboard", icon: <HiOutlineHome />, label: "Dashboard" },
-  { to: "/bookings",  icon: <HiOutlineCalendarDays />, label: "Bookings" },
-  { to: "/cabins",    icon: <HiOutlineHomeModern />, label: "Cabins" },
-  { to: "/users",     icon: <HiOutlineUsers />, label: "Users" },
-  { to: "/settings",  icon: <HiOutlineCog6Tooth />, label: "Settings" },
+  { to: "/dashboard", icon: HiOutlineHome, label: "Dashboard" },
+  { to: "/bookings", icon: HiOutlineCalendarDays, label: "Bookings" },
+  { to: "/cabins", icon: HiOutlineHomeModern, label: "Cabins" },
+  { to: "/users", icon: HiOutlineUsers, label: "Users" },
+  { to: "/settings", icon: HiOutlineCog6Tooth, label: "Settings" },
 ];
+
+const sidebarVariants = {
+  hidden: { x: -20, opacity: 0 },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: { duration: 0.3, ease: "easeOut", staggerChildren: 0.05 },
+  },
+};
+
+const itemVariants = {
+  hidden: { x: -12, opacity: 0 },
+  visible: { x: 0, opacity: 1, transition: { duration: 0.25 } },
+};
 
 function Sidebar() {
   return (
-    <StyledSidebar>
-      {/* Brand — clickable, goes to dashboard */}
-      <Brand as={Link} to="/dashboard" style={{ textDecoration: "none" }}>
-        <BrandInner>
-          <LogoImg src="/horizon-stay-logo.png" alt="Horizon Stay Logo" />
-          <BrandText>
-            <BrandName>Horizon Stay</BrandName>
-            <BrandTagline>Premium Management</BrandTagline>
-          </BrandText>
-        </BrandInner>
-      </Brand>
+    <motion.aside
+      className="flex flex-col bg-zinc-900 border-r border-zinc-800 overflow-y-auto"
+      variants={sidebarVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {/* Brand */}
+      <Link to="/dashboard" className="no-underline">
+        <motion.div
+          className="flex items-center gap-3 px-5 py-5 border-b border-zinc-800"
+          variants={itemVariants}
+        >
+          <img
+            src="/horizon-stay-logo.png"
+            alt="Horizon Stay Logo"
+            className="w-10 h-10 object-contain rounded-lg flex-shrink-0"
+          />
+          <div className="flex flex-col">
+            <span className="text-[1.5rem] font-bold text-zinc-100 tracking-tight leading-tight">
+              Horizon Stay
+            </span>
+            <span className="text-[1rem] font-semibold tracking-[0.12em] uppercase text-brand-500">
+              Management
+            </span>
+          </div>
+        </motion.div>
+      </Link>
 
       {/* Navigation */}
-      <NavSection>
-        <NavList>
-          {NAV_ITEMS.map(({ to, icon, label }) => (
-            <li key={to}>
-              <StyledNavLink to={to}>
-                {icon}
-                <span>{label}</span>
-              </StyledNavLink>
-            </li>
+      <nav className="flex-1 px-3 py-4 overflow-y-auto">
+        <ul className="flex flex-col gap-1">
+          {NAV_ITEMS.map(({ to, icon: Icon, label }) => (
+            <motion.li key={to} variants={itemVariants}>
+              <NavLink
+                to={to}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-3 rounded-lg text-[1.45rem] font-medium transition-all duration-200 no-underline ${
+                    isActive
+                      ? "bg-brand-500/10 text-zinc-100 border border-brand-500/20"
+                      : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50"
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <Icon
+                      className={`w-5 h-5 flex-shrink-0 ${
+                        isActive ? "text-brand-500" : ""
+                      }`}
+                    />
+                    <span>{label}</span>
+                  </>
+                )}
+              </NavLink>
+            </motion.li>
           ))}
-        </NavList>
-      </NavSection>
+        </ul>
+      </nav>
 
       {/* Bottom actions */}
-      <BottomSection>
-        <NewBookingBtn to="/new-booking">
-          <HiOutlinePlus />
+      <motion.div
+        className="px-3 py-4 border-t border-zinc-800 flex flex-col gap-2"
+        variants={itemVariants}
+      >
+        <Link
+          to="/new-booking"
+          className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-[1.35rem] font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-600/25 no-underline"
+        >
+          <HiOutlinePlus className="w-5 h-5" />
           New Booking
-        </NewBookingBtn>
-        <HelpLink to="/help">
-          <HiOutlineQuestionMarkCircle />
+        </Link>
+        <Link
+          to="/help"
+          className="flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-[1.35rem] text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50 transition-all duration-200 no-underline"
+        >
+          <HiOutlineQuestionMarkCircle className="w-[1.8rem] h-[1.8rem]" />
           Help Center
-        </HelpLink>
-      </BottomSection>
+        </Link>
+      </motion.div>
 
       {/* User */}
-      <UserSection>
+      <motion.div
+        className="px-3 py-4 border-t border-zinc-800"
+        variants={itemVariants}
+      >
         <UserAvatar />
-      </UserSection>
-    </StyledSidebar>
+      </motion.div>
+    </motion.aside>
   );
 }
 

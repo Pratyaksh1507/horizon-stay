@@ -1,63 +1,7 @@
-import styled from "styled-components";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../utils/constants";
-
-const StyledPagination = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const P = styled.p`
-  font-size: 1.4rem;
-  margin-left: 0.8rem;
-
-  & span {
-    font-weight: 600;
-  }
-`;
-
-const Buttons = styled.div`
-  display: flex;
-  gap: 0.6rem;
-`;
-
-const PaginationButton = styled.button`
-  background-color: ${(props) =>
-    props.active ? " var(--color-brand-600)" : "var(--color-grey-50)"};
-  color: ${(props) => (props.active ? " var(--color-brand-50)" : "inherit")};
-  border: none;
-  border-radius: var(--border-radius-sm);
-  font-weight: 500;
-  font-size: 1.4rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.6rem 1.2rem;
-  transition: all 0.3s;
-
-  &:has(span:last-child) {
-    padding-left: 0.4rem;
-  }
-
-  &:has(span:first-child) {
-    padding-right: 0.4rem;
-  }
-
-  & svg {
-    height: 1.8rem;
-    width: 1.8rem;
-  }
-
-  &:hover:not(:disabled) {
-    background-color: var(--color-brand-600);
-    color: var(--color-brand-50);
-  }
-`;
+import { motion } from "framer-motion";
 
 function Pagination({ count }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -72,6 +16,7 @@ function Pagination({ count }) {
     searchParams.set("page", next);
     setSearchParams(searchParams);
   }
+
   function prevPage() {
     const prev = currentPage === 1 ? currentPage : currentPage - 1;
     searchParams.set("page", prev);
@@ -81,28 +26,37 @@ function Pagination({ count }) {
   if (pageCount <= 1) return null;
 
   return (
-    <StyledPagination>
-      <P>
-        Showing <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
-        <span>
+    <div className="w-full flex items-center justify-between">
+      <p className="text-[1.35rem] ml-2 text-zinc-400">
+        Showing <span className="font-semibold text-zinc-200">{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
+        <span className="font-semibold text-zinc-200">
           {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
         </span>{" "}
-        of <span>{count}</span> results
-      </P>
-      <Buttons>
-        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
-          <HiChevronLeft />
+        of <span className="font-semibold text-zinc-200">{count}</span> results
+      </p>
+      <div className="flex gap-2">
+        <motion.button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          className="flex items-center gap-1 px-3 py-1.5 rounded-lg font-medium text-[1.35rem] bg-zinc-800 text-zinc-300 hover:bg-brand-600 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          whileHover={{ scale: currentPage === 1 ? 1 : 1.02 }}
+          whileTap={{ scale: currentPage === 1 ? 1 : 0.98 }}
+        >
+          <HiChevronLeft className="w-5 h-5" />
           <span>Previous</span>
-        </PaginationButton>
-        <PaginationButton
+        </motion.button>
+        <motion.button
           onClick={nextPage}
           disabled={currentPage === pageCount}
+          className="flex items-center gap-1 px-3 py-1.5 rounded-lg font-medium text-[1.35rem] bg-zinc-800 text-zinc-300 hover:bg-brand-600 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          whileHover={{ scale: currentPage === pageCount ? 1 : 1.02 }}
+          whileTap={{ scale: currentPage === pageCount ? 1 : 0.98 }}
         >
           <span>Next</span>
-          <HiChevronRight />
-        </PaginationButton>
-      </Buttons>
-    </StyledPagination>
+          <HiChevronRight className="w-5 h-5" />
+        </motion.button>
+      </div>
+    </div>
   );
 }
 

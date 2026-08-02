@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import BookingDataBox from "../../features/bookings/BookingDataBox";
 import Spinner from "../../ui/Spinner";
 import Checkbox from "../../ui/Checkbox";
@@ -6,8 +5,6 @@ import { useBooking } from "../bookings/useBooking";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateBooking } from "../../services/apiBookings";
 
-import Row from "../../ui/Row";
-import Heading from "../../ui/Heading";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
@@ -17,14 +14,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { formatCurrency } from "../../utils/helpers";
-
-const Box = styled.div`
-  /* Box */
-  background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-100);
-  border-radius: var(--border-radius-md);
-  padding: 2.4rem 4rem;
-`;
 
 function CheckinBooking() {
   const moveBack = useMoveBack();
@@ -60,21 +49,22 @@ function CheckinBooking() {
       toast.error("Please confirm that the booking has been paid");
       return;
     }
-
     checkin(bookingId);
   }
 
   return (
     <>
-      <Row type="horizontal">
-        <Heading as="h1">Check in booking #{bookingId}</Heading>
+      <div className="flex justify-between items-center mb-2">
+        <h1 className="text-[2.2rem] font-bold text-zinc-100 tracking-tight">
+          Check in booking #{bookingId}
+        </h1>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
-      </Row>
+      </div>
 
       <BookingDataBox booking={booking} />
 
       {!isPaid && (
-        <Box>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
           <Checkbox
             id="confirm-paid"
             checked={confirmPaid}
@@ -85,7 +75,7 @@ function CheckinBooking() {
             {formatCurrency(totalPrice)} for the {numNights}-night stay
             {hasBreakfast ? ", including breakfast" : ""}.
           </Checkbox>
-        </Box>
+        </div>
       )}
 
       <ButtonGroup>

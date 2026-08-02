@@ -1,68 +1,16 @@
-import styled from "styled-components";
 import { createContext, useContext } from "react";
-
-const StyledTable = styled.div`
-  border: 1px solid var(--color-grey-200);
-  font-size: 1.4rem;
-  background-color: var(--color-grey-0);
-  border-radius: 7px;
-  overflow: hidden;
-`;
-
-const CommonRow = styled.div`
-  display: grid;
-  grid-template-columns: ${(props) => props.$columns};
-  column-gap: 2.4rem;
-  align-items: center;
-  transition: none;
-`;
-
-const StyledHeader = styled(CommonRow)`
-  padding: 1.6rem 2.4rem;
-  background-color: var(--color-grey-50);
-  border-bottom: 1px solid var(--color-grey-100);
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  font-weight: 600;
-  color: var(--color-grey-600);
-`;
-
-const StyledRow = styled(CommonRow)`
-  padding: 1.2rem 2.4rem;
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-`;
-
-const StyledBody = styled.section`
-  margin: 0.4rem 0;
-`;
-
-const Footer = styled.footer`
-  background-color: var(--color-grey-50);
-  display: flex;
-  justify-content: center;
-  padding: 1.2rem;
-
-  &:not(:has(*)) {
-    display: none;
-  }
-`;
-
-const Empty = styled.p`
-  font-size: 1.6rem;
-  font-weight: 500;
-  text-align: center;
-  margin: 2.4rem;
-`;
 
 const TableContext = createContext();
 
 function Table({ columns, children }) {
   return (
     <TableContext.Provider value={{ columns }}>
-      <StyledTable role="table">{children}</StyledTable>
+      <div
+        className="border border-zinc-800 text-[1.35rem] bg-zinc-900 rounded-xl overflow-hidden"
+        role="table"
+      >
+        {children}
+      </div>
     </TableContext.Provider>
   );
 }
@@ -70,24 +18,45 @@ function Table({ columns, children }) {
 function Header({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledHeader role="rows" $columns={columns} as="header">
+    <div
+      role="row"
+      className="grid items-center py-4 px-6 bg-zinc-800/50 border-b border-zinc-800 uppercase tracking-wide font-semibold text-zinc-400 text-[1.15rem]"
+      style={{ gridTemplateColumns: columns }}
+    >
       {children}
-    </StyledHeader>
+    </div>
   );
 }
 
 function Row({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledRow role="rows" $columns={columns}>
+    <div
+      role="row"
+      className="grid items-center py-3 px-6 not-last:border-b border-zinc-800 hover:bg-zinc-800/30 transition-colors duration-150"
+      style={{ gridTemplateColumns: columns }}
+    >
       {children}
-    </StyledRow>
+    </div>
   );
 }
 
 function Body({ data = [], render }) {
-  if (!data.length) return <Empty>No data to show at the moment</Empty>;
-  return <StyledBody>{data.map(render)}</StyledBody>;
+  if (!data.length)
+    return (
+      <p className="text-[1.5rem] font-medium text-center my-6 text-zinc-500">
+        No data to show at the moment
+      </p>
+    );
+  return <section className="my-1">{data.map(render)}</section>;
+}
+
+function Footer({ children }) {
+  return (
+    <footer className="bg-zinc-800/40 p-3 flex justify-center empty:hidden">
+      {children}
+    </footer>
+  );
 }
 
 Table.Header = Header;

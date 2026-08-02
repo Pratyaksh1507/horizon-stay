@@ -1,12 +1,25 @@
-import Heading from "../ui/Heading";
+import { motion } from "framer-motion";
 import UpdateSettingsForm from "../features/settings/UpdateSettingsForm";
-import Row from "../ui/Row";
+
+const pageVariants = {
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+  exit: { opacity: 0, y: -8, transition: { duration: 0.2 } },
+};
+
 function Settings() {
   return (
-    <Row>
-      <Heading as="h1">Update hotel settings</Heading>
+    <motion.div
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+    >
+      <h1 className="text-[2.2rem] font-bold text-zinc-100 tracking-tight mb-2">
+        Update hotel settings
+      </h1>
       <UpdateSettingsForm />
-    </Row>
+    </motion.div>
   );
 }
 

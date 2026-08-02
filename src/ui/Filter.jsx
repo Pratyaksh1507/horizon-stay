@@ -1,42 +1,8 @@
-import styled, { css } from "styled-components";
 import { useSearchParams } from "react-router-dom";
-
-const StyledFilter = styled.div`
-  border: 1px solid var(--color-grey-100);
-  background-color: var(--color-grey-0);
-  box-shadow: var(--shadow-sm);
-  border-radius: var(--border-radius-sm);
-  padding: 0.4rem;
-  display: flex;
-  gap: 0.4rem;
-`;
-
-const FilterButton = styled.button`
-  background-color: var(--color-grey-0);
-  border: none;
-
-  ${(props) =>
-    props.$active &&
-    css`
-      background-color: var(--color-brand-600);
-      color: var(--color-brand-50);
-    `}
-
-  border-radius: var(--border-radius-sm);
-  font-weight: 500;
-  font-size: 1.4rem;
-  padding: 0.44rem 0.8rem;
-  transition: all 0.3s;
-
-  &:hover:not(:disabled) {
-    background-color: var(--color-brand-600);
-    color: var(--color-brand-50);
-  }
-`;
+import { motion } from "framer-motion";
 
 function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
-
   const currentFilter = searchParams.get(filterField) ?? options.at(0).value;
 
   function handleClick(value) {
@@ -48,17 +14,33 @@ function Filter({ filterField, options }) {
   }
 
   return (
-    <StyledFilter>
-      {options.map((option) => (
-        <FilterButton
-          key={option.value}
-          onClick={() => handleClick(option.value)}
-          $active={option.value === currentFilter}
-        >
-          {option.label}
-        </FilterButton>
-      ))}
-    </StyledFilter>
+    <div className="border border-zinc-800/60 bg-zinc-900/50 rounded-lg p-1 flex gap-1">
+      {options.map((option) => {
+        const isActive = option.value === currentFilter;
+        return (
+          <motion.button
+            key={option.value}
+            onClick={() => handleClick(option.value)}
+            className={`relative rounded-md font-medium text-[1.35rem] px-4 py-1.5 transition-colors duration-200 ${
+              isActive
+                ? "text-white"
+                : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50"
+            }`}
+            whileTap={{ scale: 0.97 }}
+          >
+            {isActive && (
+              <motion.div
+                layoutId="activeFilterPill"
+                className="absolute inset-0 bg-brand-600 rounded-md shadow-sm"
+                initial={false}
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+            )}
+            <span className="relative z-10">{option.label}</span>
+          </motion.button>
+        );
+      })}
+    </div>
   );
 }
 

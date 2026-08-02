@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
+import { motion } from "framer-motion";
 import {
   HiOutlineCalendarDays,
   HiOutlineChartBar,
@@ -9,320 +9,149 @@ import {
   HiOutlineUsers,
 } from "react-icons/hi2";
 
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-`;
-
-const Page = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f1a 0%, #1a1033 50%, #0d1a2e 100%);
-  color: #e8e8e8;
-  font-family: "Poppins", sans-serif;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2.4rem 6.4rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-`;
-
-const NavBrand = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-`;
-
-const BrandLogo = styled.img`
-  width: 3.6rem;
-  height: 3.6rem;
-  object-fit: contain;
-  border-radius: 8px;
-`;
-
-const BrandName = styled.span`
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  background: linear-gradient(90deg, #818cf8, #c4b5fd);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-`;
-
-const NavActions = styled.div`
-  display: flex;
-  gap: 1.2rem;
-  align-items: center;
-`;
-
-const GhubLink = styled.a`
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1.4rem;
-  text-decoration: none;
-  transition: color 0.2s;
-  &:hover { color: white; }
-`;
-
-const Hero = styled.section`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 8rem 3.2rem 4rem;
-  animation: ${fadeIn} 0.8s ease both;
-`;
-
-const Badge = styled.span`
-  display: inline-block;
-  background: rgba(99, 102, 241, 0.15);
-  border: 1px solid rgba(99, 102, 241, 0.4);
-  color: #a5b4fc;
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.6rem 1.6rem;
-  border-radius: 100px;
-  margin-bottom: 2.4rem;
-`;
-
-const HeroTitle = styled.h1`
-  font-size: clamp(3.6rem, 7vw, 7.2rem);
-  font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 2rem;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-`;
-
-const HeroSub = styled.p`
-  font-size: 1.8rem;
-  color: rgba(255, 255, 255, 0.6);
-  max-width: 56rem;
-  line-height: 1.7;
-  margin-bottom: 4rem;
-`;
-
-const FeatureRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.2rem;
-  justify-content: center;
-  margin-bottom: 5.6rem;
-`;
-
-const Feature = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 100px;
-  padding: 0.8rem 1.6rem;
-  font-size: 1.4rem;
-  color: rgba(255, 255, 255, 0.75);
-
-  svg {
-    width: 1.6rem;
-    height: 1.6rem;
-    color: #818cf8;
-  }
-`;
-
-const DemoCard = styled.div`
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 3.2rem 4rem;
-  max-width: 44rem;
-  width: 100%;
-  margin-bottom: 3.2rem;
-  backdrop-filter: blur(12px);
-`;
-
-const DemoTitle = styled.h3`
-  font-size: 1.4rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #818cf8;
-  margin-bottom: 1.6rem;
-`;
-
-const DemoField = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
-const DemoLabel = styled.span`
-  font-size: 1.3rem;
-  color: rgba(255, 255, 255, 0.5);
-`;
-
-const DemoValue = styled.span`
-  font-size: 1.4rem;
-  font-weight: 500;
-  font-family: "Courier New", monospace;
-  color: #e8e8e8;
-  background: rgba(99, 102, 241, 0.1);
-  padding: 0.4rem 1rem;
-  border-radius: 6px;
-  border: 1px solid rgba(99, 102, 241, 0.2);
-`;
-
-const CTAButton = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8rem;
-  background: linear-gradient(135deg, #6366f1, #4f46e5);
-  color: white;
-  font-size: 1.6rem;
-  font-weight: 600;
-  padding: 1.4rem 3.2rem;
-  border-radius: 12px;
-  text-decoration: none;
-  transition: all 0.2s;
-  box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5);
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
-  }
-  &:active {
-    transform: translateY(0);
-  }
-`;
-
-const Stack = styled.section`
-  text-align: center;
-  padding: 4rem 3.2rem 6.4rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-`;
-
-const StackTitle = styled.p`
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.3);
-  margin-bottom: 2rem;
-`;
-
-const StackTags = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  justify-content: center;
-`;
-
-const Tag = styled.span`
-  font-size: 1.2rem;
-  font-weight: 500;
-  padding: 0.4rem 1.2rem;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.6);
-`;
-
 const FEATURES = [
-  { icon: <HiOutlineCalendarDays />, label: "Booking management" },
-  { icon: <HiOutlineHomeModern />, label: "Cabin CRUD" },
-  { icon: <HiOutlineChartBar />, label: "Revenue analytics" },
-  { icon: <HiOutlineUsers />, label: "Guest tracking" },
-  { icon: <HiOutlineLockClosed />, label: "Auth & protected routes" },
-  { icon: <HiOutlineMoon />, label: "Dark / Light mode" },
+  { icon: HiOutlineCalendarDays, label: "Booking management" },
+  { icon: HiOutlineHomeModern, label: "Cabin CRUD" },
+  { icon: HiOutlineChartBar, label: "Revenue analytics" },
+  { icon: HiOutlineUsers, label: "Guest tracking" },
+  { icon: HiOutlineLockClosed, label: "Auth & protected routes" },
+  { icon: HiOutlineMoon, label: "Dark / Light mode" },
 ];
 
 const TECH = [
-  "React 18",
-  "React Router v6",
-  "Supabase",
-  "React Query",
-  "Styled Components",
-  "Recharts",
-  "React Hook Form",
-  "Vite",
+  "React 18", "React Router v6", "Supabase", "React Query",
+  "Tailwind CSS", "Recharts", "React Hook Form", "Vite",
 ];
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
 
 function LandingPage() {
   return (
-    <Page>
-      <Nav>
-        <NavBrand>
-          <BrandLogo src="/horizon-stay-logo.png" alt="Horizon Stay" />
-          <BrandName>HORIZON STAY</BrandName>
-        </NavBrand>
-        <NavActions>
-          <GhubLink
+    <motion.div
+      className="min-h-screen bg-gradient-to-br from-[#0f0f1a] via-[#1a1033] to-[#0d1a2e] text-zinc-200 flex flex-col"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <nav className="flex justify-between items-center px-16 py-6 border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <img src="/horizon-stay-logo.png" alt="Horizon Stay" className="w-9 h-9 object-contain rounded-lg" />
+          <span className="text-[1.8rem] font-bold tracking-wider bg-gradient-to-r from-[#818cf8] to-[#c4b5fd] bg-clip-text text-transparent">
+            HORIZON STAY
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          <a
             href="https://github.com/Pratyaksh1507/horizon-stay"
             target="_blank"
             rel="noopener noreferrer"
+            className="text-zinc-400 hover:text-white text-[1.35rem] no-underline transition-colors"
           >
             GitHub ↗
-          </GhubLink>
-        </NavActions>
-      </Nav>
+          </a>
+        </div>
+      </nav>
 
-      <Hero>
-        <Badge>Hotel Management SaaS • Full Stack</Badge>
-        <HeroTitle>
+      <motion.section
+        className="flex-1 flex flex-col items-center justify-center text-center px-8 py-20"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.span
+          variants={fadeUp}
+          className="inline-block bg-brand-500/15 border border-brand-500/40 text-[#a5b4fc] text-[1.15rem] font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6"
+        >
+          Hotel Management SaaS • Full Stack
+        </motion.span>
+
+        <motion.h1
+          variants={fadeUp}
+          className="text-[clamp(3.6rem,7vw,7.2rem)] font-extrabold leading-[1.1] mb-5 tracking-tight bg-gradient-to-br from-white via-white to-[#a5b4fc] bg-clip-text text-transparent"
+        >
           The modern dashboard
           <br />
           for boutique hotels.
-        </HeroTitle>
-        <HeroSub>
+        </motion.h1>
+
+        <motion.p
+          variants={fadeUp}
+          className="text-[1.7rem] text-zinc-400 max-w-[56rem] leading-relaxed mb-10"
+        >
           A production-grade hotel management system built with React, Supabase,
-          and React Query. Manage bookings, cabins, and analytics — all in one
-          place.
-        </HeroSub>
+          and React Query. Manage bookings, cabins, and analytics — all in one place.
+        </motion.p>
 
-        <FeatureRow>
-          {FEATURES.map((f) => (
-            <Feature key={f.label}>
-              {f.icon} {f.label}
-            </Feature>
+        <motion.div
+          variants={fadeUp}
+          className="flex flex-wrap gap-3 justify-center mb-14"
+        >
+          {FEATURES.map(({ icon: Icon, label }) => (
+            <span
+              key={label}
+              className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-[1.35rem] text-zinc-300"
+            >
+              <Icon className="w-4 h-4 text-[#818cf8]" />
+              {label}
+            </span>
           ))}
-        </FeatureRow>
+        </motion.div>
 
-        <DemoCard>
-          <DemoTitle>🔑 Demo Access</DemoTitle>
-          <DemoField>
-            <DemoLabel>Email</DemoLabel>
-            <DemoValue>demo@horizonstay.com</DemoValue>
-          </DemoField>
-          <DemoField>
-            <DemoLabel>Password</DemoLabel>
-            <DemoValue>demo1234</DemoValue>
-          </DemoField>
-        </DemoCard>
+        <motion.div
+          variants={fadeUp}
+          className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm max-w-[42rem] w-full mb-8"
+        >
+          <h3 className="text-[1.35rem] font-semibold uppercase tracking-widest text-[#818cf8] mb-4">
+            🔑 Demo Access
+          </h3>
+          <div className="flex justify-between items-center py-3 border-b border-white/5 last:border-b-0">
+            <span className="text-[1.25rem] text-zinc-400">Email</span>
+            <span className="text-[1.35rem] font-mono font-medium text-zinc-200 bg-brand-500/10 px-3 py-1 rounded-md border border-brand-500/20">
+              demo@horizonstay.com
+            </span>
+          </div>
+          <div className="flex justify-between items-center py-3 border-b border-white/5 last:border-b-0">
+            <span className="text-[1.25rem] text-zinc-400">Password</span>
+            <span className="text-[1.35rem] font-mono font-medium text-zinc-200 bg-brand-500/10 px-3 py-1 rounded-md border border-brand-500/20">
+              demo1234
+            </span>
+          </div>
+        </motion.div>
 
-        <CTAButton to="/login">Enter Dashboard →</CTAButton>
-      </Hero>
+        <motion.div variants={fadeUp}>
+          <Link
+            to="/login"
+            className="inline-flex items-center gap-2 bg-gradient-to-br from-[#6366f1] to-[#4f46e5] text-white text-[1.5rem] font-semibold px-8 py-3.5 rounded-xl no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(99,102,241,0.4)]"
+          >
+            Enter Dashboard →
+          </Link>
+        </motion.div>
+      </motion.section>
 
-      <Stack>
-        <StackTitle>Built With</StackTitle>
-        <StackTags>
+      <section className="text-center px-8 py-10 border-t border-white/5">
+        <p className="text-[1.15rem] uppercase tracking-widest text-zinc-500 mb-5">
+          Built With
+        </p>
+        <div className="flex flex-wrap gap-2 justify-center">
           {TECH.map((t) => (
-            <Tag key={t}>{t}</Tag>
+            <span
+              key={t}
+              className="text-[1.15rem] font-medium px-3 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-400"
+            >
+              {t}
+            </span>
           ))}
-        </StackTags>
-      </Stack>
-    </Page>
+        </div>
+      </section>
+    </motion.div>
   );
 }
 

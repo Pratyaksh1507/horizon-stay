@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { AnimatePresence } from "framer-motion";
 
-import GlobalStyles from "./styles/GlobalStyles";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
 import Booking from "./pages/Booking";
@@ -34,36 +34,37 @@ function App() {
     <DarkModeProvider>
       <QueryClientProvider client={queryClient}>
         {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
-        <GlobalStyles />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/welcome" element={<LandingPage />} />
-            <Route
-              element={
-                <ProtectedRoute>
-                  <AppLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<Navigate replace to="dashboard" />} />
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="bookings" element={<Bookings />} />
-              <Route path="bookings/:bookingId" element={<Booking />} />
-              <Route path="checkin/:bookingId" element={<Checkin />} />
-              <Route path="cabins" element={<Cabins />} />
-              <Route path="users" element={<Users />} />
-              <Route path="settings" element={<Settings />} />
-              <Route path="account" element={<Account />} />
-              <Route path="new-booking" element={<NewBooking />} />
-              <Route path="help" element={<HelpCenter />} />
-            </Route>
-            <Route path="login" element={<Login />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <AnimatePresence mode="wait">
+            <Routes>
+              <Route path="/welcome" element={<LandingPage />} />
+              <Route
+                element={
+                  <ProtectedRoute>
+                    <AppLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<Navigate replace to="dashboard" />} />
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="bookings" element={<Bookings />} />
+                <Route path="bookings/:bookingId" element={<Booking />} />
+                <Route path="checkin/:bookingId" element={<Checkin />} />
+                <Route path="cabins" element={<Cabins />} />
+                <Route path="users" element={<Users />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="account" element={<Account />} />
+                <Route path="new-booking" element={<NewBooking />} />
+                <Route path="help" element={<HelpCenter />} />
+              </Route>
+              <Route path="login" element={<Login />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </AnimatePresence>
         </BrowserRouter>
 
         <Toaster
-          position="top-center"
+          position="top-right"
           gutter={12}
           containerStyle={{ margin: "8px" }}
           toastOptions={{
@@ -74,11 +75,13 @@ function App() {
               duration: 5000,
             },
             style: {
-              fontSize: "16px",
+              fontSize: "1.4rem",
               maxWidth: "500px",
-              padding: "16px 24px",
-              backgroundColor: "var(--color-grey-0)",
-              color: "var(--color-grey-700)",
+              padding: "1.2rem 1.6rem",
+              backgroundColor: "#27272a",
+              color: "#fafafa",
+              border: "1px solid #3f3f46",
+              borderRadius: "12px",
             },
           }}
         />

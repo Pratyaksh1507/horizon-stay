@@ -8,22 +8,15 @@ import Stat from "./Stat";
 import { formatCurrency } from "../../utils/helpers";
 
 function Stats({ bookings = [], confirmedStays = [], numDays = 7, cabinCount = 0 }) {
-  // 1. Number of bookings
   const numBookings = bookings.length;
-
-  // 2. Total sales in the period
   const sales = bookings.reduce((acc, cur) => acc + cur.totalPrice, 0);
-
-  // 3. Check-ins in the period
   const checkins = confirmedStays.length;
-
-  // 4. Occupancy rate = checked in nights / all available nights
   const occupation =
     confirmedStays.reduce((acc, cur) => acc + cur.numNights, 0) /
     (numDays * cabinCount);
 
   return (
-    <>
+    <div className="grid grid-cols-2 gap-5 h-full">
       <Stat
         title="Bookings"
         color="blue"
@@ -48,7 +41,7 @@ function Stats({ bookings = [], confirmedStays = [], numDays = 7, cabinCount = 0
         icon={<HiOutlineChartBar />}
         value={Math.round(occupation * 100) + "%"}
       />
-    </>
+    </div>
   );
 }
 

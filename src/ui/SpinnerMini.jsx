@@ -1,16 +1,7 @@
-import styled, { keyframes } from "styled-components";
-import { BiLoaderAlt } from "react-icons/bi";
-
-const rotate = keyframes`
-  to {
-    transform: rotate(1turn)
-  }
-`;
-
-const SpinnerMini = styled(BiLoaderAlt)`
-  width: 2.4rem;
-  height: 2.4rem;
-  animation: ${rotate} 1.5s infinite linear;
-`;
+function SpinnerMini() {
+  return (
+    <div className="w-6 h-6 border-2 border-zinc-800 border-t-brand-600 rounded-full animate-spin" />
+  );
+}
 
 export default SpinnerMini;

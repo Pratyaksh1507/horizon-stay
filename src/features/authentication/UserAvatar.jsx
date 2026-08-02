@@ -1,29 +1,4 @@
-import styled from "styled-components";
 import { useUser } from "./useUser";
-
-const StyledUserAvatar = styled.div`
-  display: flex;
-  gap: 1.2rem;
-  align-items: center;
-  font-weight: 500;
-  font-size: 1.4rem;
-  color: var(--color-grey-600);
-`;
-
-const Avatar = styled.img`
-  display: block;
-  width: 4rem;
-  width: 3.6rem;
-  aspect-ratio: 1;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 50%;
-  outline: 2px solid var(--color-grey-100);
-`;
-
-const Name = styled.span`
-  white-space: nowrap;
-`;
 
 function UserAvatar() {
   const { user } = useUser();
@@ -34,10 +9,14 @@ function UserAvatar() {
     user?.user_metadata?.fullName || user?.email?.split("@")[0] || "Account";
 
   return (
-    <StyledUserAvatar>
-      <Avatar src={avatarSrc} alt={fullName} />
-      <Name>{fullName}</Name>
-    </StyledUserAvatar>
+    <div className="flex gap-3 items-center font-medium text-[1.35rem] text-zinc-400">
+      <img
+        src={avatarSrc}
+        alt={fullName}
+        className="block w-9 h-9 object-cover object-center rounded-full outline-2 outline-zinc-700"
+      />
+      <span className="whitespace-nowrap">{fullName}</span>
+    </div>
   );
 }
 
