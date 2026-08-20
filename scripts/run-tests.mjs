@@ -89,12 +89,9 @@ async function runSuite() {
     }
   });
 
-  await test("All 8 cabin images exist in /public/cabins/", () => {
-    for (let i = 1; i <= 8; i++) {
-      const filename = `cabin-00${i}.jpg`;
-      const filePath = path.join(rootDir, "public", "cabins", filename);
-      assert.ok(fs.existsSync(filePath), `Missing asset: ${filePath}`);
-    }
+  await test("Horizon Stay brand logo exists in /public/horizon-stay-logo.png", () => {
+    const logoPath = path.join(rootDir, "public", "horizon-stay-logo.png");
+    assert.ok(fs.existsSync(logoPath), `Missing asset: ${logoPath}`);
   });
 
   // ----------------------------------------------------

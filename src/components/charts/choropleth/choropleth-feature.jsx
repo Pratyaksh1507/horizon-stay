@@ -1,6 +1,6 @@
 "use client";
 import { geoCentroid } from "d3-geo";
-import { motion, useTransform } from "motion/react";
+import { motion, useTransform } from "framer-motion";
 import { memo, useCallback, useMemo } from "react";
 import { useEnterComplete } from "../use-enter-complete";
 import { useMountProgress } from "../use-mount-progress";

@@ -9,9 +9,12 @@ import {
   deleteMockBooking,
 } from "../data/mockData";
 
-export async function getbookings({ filter, sortBy, page } = {}) {
+export async function getBookings({ filter, sortBy, page } = {}) {
   return getMockBookings({ filter, sortBy, page });
 }
+
+// Backward-compatible alias
+export const getbookings = getBookings;
 
 export async function getBooking(id) {
   return getMockBooking(id);
