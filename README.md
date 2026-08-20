@@ -1,224 +1,163 @@
-# Horizon Stay &mdash; Executive Resort Management Dashboard
+<div align="center">
 
-A modern, production-ready luxury hotel and mountain resort management platform built with **React 18**, **Vite**, **TanStack React Query**, and **Tailwind CSS**. Designed for hospitality managers, resort operators, and front-desk concierges to streamline bookings, guest check-ins, cabin inventory, staff access, and revenue intelligence in one unified interface.
+# 🏨 Horizon Stay
+### Luxury Resort & Hotel Operations Dashboard
 
----
+**An all-in-one management platform designed for luxury boutique resorts, hotels, and mountain chalets.**  
+*Effortlessly manage bookings, guest check-ins, chalet inventory, and revenue analytics in real time.*
 
-## Table of Contents
+[![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![React Query](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=react-query&logoColor=white)](https://tanstack.com/query)
+[![License: MIT](https://img.shields.io/badge/License-MIT-amber.svg?style=for-the-badge)](LICENSE)
 
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Tech Stack](#tech-stack)
-- [Architecture & Design System](#architecture--design-system)
-- [Frontend Structure](#frontend-structure)
-- [Data & API Layer](#data--api-layer)
-- [Performance & Smooth Loading](#performance--smooth-loading)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [Scripts & Quality Assurance](#scripts--quality-assurance)
-- [Deployment](#deployment)
-- [Roadmap & Future Enhancements](#roadmap--future-enhancements)
-- [Author & License](#author--license)
+[✨ Live Demo](#-quick-demo--login) • [🚀 Quick Start](#-quick-start-in-1-minute) • [🌟 Key Features](#-what-can-you-do-with-horizon-stay) • [📱 Tech Stack](#-technology-used)
+
+</div>
 
 ---
 
-## Overview
+## 📖 What is Horizon Stay?
 
-**Horizon Stay** provides luxury hospitality teams with real-time operational control. From managing high-touch guest arrivals to tracking chalet turnover schedules and global demographic trends, the platform combines responsive executive aesthetics with 60fps data visualizations.
+Running a high-end luxury resort involves dozens of moving parts every day — welcoming new VIP guests, ensuring chalets are cleaned on time, tracking seasonal income, and adjusting resort policies.
 
----
-
-## Key Features
-
-### 1. Operations Dashboard
-- **Executive KPI Metrics**: Real-time cards displaying total period revenue, room vs. extras breakdown, occupancy rates, and Average Daily Rate (ADR) powered by animated `NumberFlow` counters.
-- **Revenue & Operations Intelligence**: 4-mode dynamic area chart supporting Combined Revenue, Rooms vs. Extras breakdown, Room Nights occupancy, and Daily Benchmark lines across 7, 30, and 90-day intervals.
-- **Front Desk Today Activity**: Instant view of today's unconfirmed arrivals and departing residents with 1-click check-in/out actions.
-- **Cabin Turnover Matrix**: Visual grid of all 8 luxury chalets showing live occupancy status, guest identities, and housekeeping turnover readiness.
-- **Global Guest Reach Map**: Interactive world choropleth map with an **"All Clients" vs. "Active In-House"** toggle and ranked top-source markets leaderboard.
-- **Stay Duration Breakdown**: Recharts-driven donut chart analyzing guest stay lengths (1-3 nights, 4-5 nights, 6-7 nights, 8+ nights).
-
-### 2. Reservations Hub (`/bookings`)
-- Filter by status (**All**, **Checked In**, **Unconfirmed**, **Checked Out**) with animated segmented tabs.
-- Multi-field sorting by start date, departure date, and total amount.
-- Monospace cabin unit chips, guest country flags, email subtitles, and duration badges.
-- Paginated table with instant query prefetching for zero-latency page transitions.
-
-### 3. Concierge Guest Check-In (`/checkin/:id`)
-- Dedicated concierge check-in workflow with stay recap and guest notes.
-- **Gourmet Breakfast Package Upsell**: Interactive switch that calculates optional breakfast add-ons and updates total billing in real time.
-- Payment confirmation checkbox with verified status tags.
-
-### 4. Create Reservation Engine (`/new-booking`)
-- Dynamic booking form with integrated calendar date picker.
-- Live pricing calculator showing cabin base rates, length-of-stay discounts, breakfast add-ons, and total charges before submission.
-- Real-time cabin availability and capacity validation.
-
-### 5. Cabin Inventory Management (`/cabins`)
-- High-resolution photography previews with hover zoom animations.
-- Pricing breakdown with strikethrough discount tags and capacity chips.
-- 1-click cabin duplication and multi-column creation/edit modal with live image upload previews.
-
-### 6. Staff & User Directory (`/users`)
-- Active staff cards featuring profile portraits, department tags, on-duty status indicators, and verified badges.
-- Internal employee invitation portal with role assignment (*Front Desk Concierge*, *Executive Housekeeping*, *Resort Operations*, *Assistant General Manager*).
-
-### 7. Resort Policy & Configuration (`/settings`)
-- 4 interactive policy cards for minimum stay duration, maximum booking limits, guest thresholds, and breakfast pricing.
-- Real-time auto-saving with instant feedback badges.
-
-### 8. Manager Account & Security (`/account`)
-- Personal manager profile management with live portrait upload and instant navbar/sidebar synchronization.
-- Credential update form with secure password validation.
-
-### 9. Theme & Navigation Polish
-- **Dynamic Dark / Light Mode**: Smooth theme switching between Executive Obsidian (`#09090b`) and Alpine Light (`#f8fafc`) with dynamic CSS variable tokens.
-- **Collapsible Sidebar**: Smooth expandable/collapsible sidebar with compact icon rail mode and floating hover tooltips.
+**Horizon Stay** gives resort managers and front-desk concierges a single, intuitive control panel to oversee the entire property with zero friction. It turns complicated hospitality data into clean, beautiful charts and instant 1-click actions.
 
 ---
 
-## Tech Stack
+## 🌟 What Can You Do with Horizon Stay?
 
-| Layer | Technologies |
-| :--- | :--- |
-| **Frontend Framework** | React 18 (Hooks, Suspense, Lazy Loading, Context API) |
-| **Build & Tooling** | Vite 4, Rollup |
-| **Routing** | React Router v6 (Nested Routes, URL Search Params, Protected Routes) |
-| **State & Data Caching** | TanStack React Query v5 |
-| **Styling** | Tailwind CSS v4, Dynamic CSS Custom Properties |
-| **Motion & Micro-interactions** | Framer Motion |
-| **Charts & Geospatial** | Recharts, Visx (Geo & Responsive), D3-Geo, TopoJSON |
-| **Forms & Validation** | React Hook Form |
-| **Icons & Numbers** | Lucide React, React Icons, NumberFlow |
-| **Notifications** | React Hot Toast |
+### 📊 1. Executive Operations Hub
+- **Instant Financial Insights**: See today's total revenue, room sales vs. gourmet breakfast earnings, overall occupancy percentage, and Average Daily Rate (ADR) at a glance.
+- **Interactive Revenue Trends**: Track performance across **7, 30, or 90 days** with smooth charts comparing total income against target benchmarks.
+- **Front Desk Today Activity**: View guests arriving today and departing residents with 1-click check-in and check-out buttons.
+- **Chalet Housekeeping Matrix**: A visual live grid showing all 8 resort chalets, whether they are occupied or available, and if they're ready for new guests.
+- **Global Guest Reach Map**: An interactive world map showing which countries your guests travel from with an **"All Clients" vs. "Active In-House"** toggle.
 
----
+### 🛎️ 2. Effortless Reservations (`/bookings`)
+- View all past, present, and upcoming reservations in a clear, searchable table.
+- Filter instantly by status (**Checked In**, **Unconfirmed**, **Checked Out**).
+- Sort by date or total price with zero page-load lag.
 
-## Architecture & Design System
+### 🔑 3. 1-Click Guest Check-In (`/checkin/:id`)
+- Review stay details, guest notes, and dietary requests before handing over room keys.
+- **Optional Breakfast Add-on**: Easily add gourmet breakfast packages to any stay with automatic live price updates.
+- Confirm payments and mark bookings verified on the spot.
 
-Horizon Stay employs a modular, feature-based architecture:
+### 📝 4. Create New Bookings (`/new-booking`)
+- Reserve chalets with an easy interactive calendar date picker.
+- Live cost calculator that computes base room rates, multi-night discounts, and optional meals in real time before submitting.
 
-```
-src/
-├── components/          # Standalone shared visualization components (Choropleth map)
-├── context/             # React Context providers (DarkModeContext, SidebarContext)
-├── data/                # Data storage engine and realistic resort seed models
-├── features/            # Domain-driven feature modules
-│   ├── authentication/  # Login, signup, user avatar, profile & password management
-│   ├── bookings/        # Reservation table, rows, details card, booking mutations
-│   ├── cabins/          # Cabin table, rows, creation/edit modal, CRUD hooks
-│   ├── check-in-out/    # Check-in concierge, checkout triggers, Today Activity
-│   ├── dashboard/       # KPI Stats, SalesChart, DurationChart, Cabin Matrix, Map hooks
-│   └── settings/        # Resort policy forms and update hooks
-├── hooks/               # Reusable utility hooks (useOutsideClick, useLocalStorageState)
-├── pages/               # Lazy-loaded top-level view components
-├── services/            # API abstraction layer (apiAuth, apiBookings, apiCabins, apiSettings)
-├── ui/                  # Reusable UI component library (Table, Modal, ErrorBoundary, Skeletons)
-└── utils/               # Formatting and date calculation helpers
-```
+### 🏡 5. Cabin & Suite Management (`/cabins`)
+- View beautiful high-definition photo galleries for each luxury chalet.
+- Update seasonal rates, special discounts, and maximum guest capacity with 1 click.
+- Duplicate existing room setups or add brand new chalets with image upload previews.
 
----
+### 👥 6. Staff Directory & Permissions (`/users`)
+- Manage resort staff profiles (Concierge, Housekeeping, Operations, General Manager).
+- Invite new team members with dedicated role access.
 
-## Performance & Smooth Loading
+### ⚙️ 7. Resort Policy Controls (`/settings`)
+- Adjust minimum & maximum stay durations, max guests per booking, and standard breakfast prices across the property.
 
-1. **Route Code-Splitting**: All top-level page routes are dynamically imported via `React.lazy()` and wrapped in `<Suspense>`, keeping the initial bundle payload to **~89 kB (25.8 kB gzipped)**.
-2. **Rollup Vendor Chunking**: Heavy third-party libraries (`vendor-react`, `vendor-query`, `vendor-motion`, `vendor-charts`, `vendor-icons`) are bundled into separate cached chunks in `vite.config.js`.
-3. **Zero Cumulative Layout Shift (CLS = 0)**: Shimmering skeleton loaders ([`DashboardSkeleton.jsx`](file:///Users/pratyakshkalsi/Desktop/horizon-stay/src/ui/DashboardSkeleton.jsx), [`PageSkeleton.jsx`](file:///Users/pratyakshkalsi/Desktop/horizon-stay/src/ui/PageSkeleton.jsx)) render matching component layouts before data resolves.
-4. **TanStack Query Caching**: Configured with `staleTime: 2m` and `gcTime: 10m` to prevent network refetch flickers during navigation.
-5. **Top-Level Error Boundary**: Global React Error Boundary catches client-side exceptions and presents a graceful recovery UI.
+### 🌓 8. Dark & Light Theme
+- Seamlessly toggle between **Executive Obsidian (Dark Mode)** and **Alpine Clean (Light Mode)** to suit any lighting environment.
+- **Collapsible Sidebar** gives you more screen space whenever you need it.
 
 ---
 
-## Getting Started
+## 🚀 Quick Start (In 1 Minute)
 
-### Prerequisites
+You don't need any complex database setups to try Horizon Stay — it comes with a built-in demo database right in your browser!
 
-- Node.js **18.x** or higher
-- npm **9.x** or higher
-
-### Installation
-
+### 1. Clone the repository
 ```bash
-# Clone the repository
 git clone https://github.com/Pratyaksh1507/horizon-stay.git
-
-# Navigate into project directory
 cd horizon-stay
+```
 
-# Install dependencies
+### 2. Install dependencies
+```bash
 npm install
 ```
 
-### Running Locally
-
+### 3. Start the app
 ```bash
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser.
-
-> **Demo Login**: On the login screen, click **"Auto-fill Demo Credentials"** to authenticate instantly as the General Manager.
+Open your browser and go to: **`http://localhost:5173`** 🎉
 
 ---
 
-## Environment Variables
+## 🔐 Quick Demo & Login
 
-Copy `.env.example` to create a local `.env` file if connecting to an external backend:
+When you launch the app, you will see a login page. Simply click:
 
-```env
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
+> **✨ "Auto-fill Demo Credentials"**  
+> *(This will automatically log you in as General Manager to explore all features instantly)*
+
+---
+
+## 🛠️ Technology Used
+
+Built with modern, industry-standard web technologies to ensure lightning-fast speed and a buttery-smooth 60fps experience:
+
+- **React 18** &mdash; For interactive, modern UI components
+- **Vite** &mdash; Super fast build tool and instant hot reloading
+- **Tailwind CSS v4** &mdash; Sleek, luxury styling and responsive mobile design
+- **TanStack React Query** &mdash; Instant data caching with zero-loading flickers
+- **Framer Motion** &mdash; Smooth micro-animations and page transitions
+- **Recharts & Visx** &mdash; Dynamic revenue charts and interactive world map
+- **Lucide Icons** &mdash; Clean, modern executive iconography
+
+---
+
+## 📁 Project Structure
+
+```
+horizon-stay/
+├── public/                 # High-definition chalet photos & brand logos
+├── src/
+│   ├── components/         # Interactive world choropleth map
+│   ├── context/            # Dark mode & collapsible sidebar state
+│   ├── data/               # Realistic resort mock database engine
+│   ├── features/           # Feature modules (Bookings, Cabins, Check-in, Dashboard)
+│   ├── pages/              # Clean page views with fast lazy loading
+│   ├── services/           # API and data fetching layer
+│   └── ui/                 # Reusable UI cards, tables, buttons, and error boundaries
+└── scripts/
+    └── run-tests.mjs       # Automated test suite (21/21 passing tests)
 ```
 
-*Note: Horizon Stay includes a built-in localStorage mock engine out of the box, allowing full evaluation without mandatory external database credentials.*
-
 ---
 
-## Scripts & Quality Assurance
+## 🧪 Quality & Testing
+
+Horizon Stay is thoroughly tested for stability and performance:
 
 ```bash
-# Start development server
-npm run dev
-
-# Run automated test suite (21/21 passing tests)
+# Run the complete automated test suite (21/21 passing)
 npm test
 
-# Run ESLint validation (0 errors, 0 warnings)
+# Run code style & quality check (0 warnings)
 npm run lint
 
-# Build production bundle
+# Create production build
 npm run build
-
-# Preview production build locally
-npm run preview
 ```
 
 ---
 
-## Deployment
+## 👨‍💻 Created By
 
-Horizon Stay is optimized for one-click deployment on standard cloud static hosts:
-
-### Vercel
-- The repository includes [`vercel.json`](file:///Users/pratyakshkalsi/Desktop/horizon-stay/vercel.json) with client-side SPA routing rewrites.
-- Simply import the repository in the Vercel dashboard and click **Deploy**.
-
-### Netlify
-- The repository includes [`public/_redirects`](file:///Users/pratyakshkalsi/Desktop/horizon-stay/public/_redirects) for SPA routing fallback.
-- Set build command to `npm run build` and publish directory to `dist`.
+**Pratyaksh Kalsi**  
+*Full Stack & Frontend Software Engineer*  
+- GitHub: [@Pratyaksh1507](https://github.com/Pratyaksh1507)
 
 ---
 
-## Roadmap & Future Enhancements
+## 📄 License
 
-- [ ] Multi-property portfolio switcher for hotel groups with multiple locations.
-- [ ] Exportable reservation reports in PDF and Excel formats.
-- [ ] Direct guest SMS notification integration for check-in arrival instructions.
-- [ ] Housekeeping mobile tablet view for real-time room readiness updates.
-
----
-
-## Author & License
-
-Developed with precision by **Pratyaksh Kalsi**.  
-Licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE) &mdash; feel free to use it for personal projects, learning, and portfolio inspiration.
