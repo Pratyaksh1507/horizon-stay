@@ -1,10 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { HiArrowRightOnRectangle } from "react-icons/hi2";
-import { Cloud, MapPin, Plus, Sparkles, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { Cloud, MapPin, Plus, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLogout } from "../features/authentication/useLogout";
-import { useSidebar } from "../context/SidebarContext";
 import DarkModeToggle from "./DarkModeToggle";
 
 const ROUTE_CONFIG = {
@@ -31,33 +30,19 @@ function getRouteInfo(pathname) {
 
 function Header() {
   const { logout, isPending } = useLogout();
-  const { isCollapsed, toggleSidebar } = useSidebar();
   const location = useLocation();
   const navigate = useNavigate();
   const { section, title } = getRouteInfo(location.pathname);
 
   return (
     <motion.header
-      className="bg-zinc-900/80 backdrop-blur-xl px-4 sm:px-8 border-b border-zinc-800/90 flex items-center justify-between h-16 sm:h-[4.5rem] sticky top-0 z-30 shadow-sm"
+      className="bg-zinc-900/80 backdrop-blur-xl px-6 sm:px-8 border-b border-zinc-800/90 flex items-center justify-between h-16 sm:h-[4.5rem] sticky top-0 z-30 shadow-sm"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
-      {/* Breadcrumb & Sidebar Toggle */}
-      <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
-        <button
-          onClick={toggleSidebar}
-          type="button"
-          title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
-          className="p-2 rounded-xl bg-zinc-950/60 border border-zinc-800/80 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-all cursor-pointer shadow-xs flex-shrink-0"
-        >
-          {isCollapsed ? (
-            <PanelLeftOpen className="w-4 h-4 text-amber-400" />
-          ) : (
-            <PanelLeftClose className="w-4 h-4" />
-          )}
-        </button>
-
+      {/* Breadcrumb & Section Indicator */}
+      <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-950/70 border border-zinc-800 text-[1.15rem] font-medium text-zinc-400 flex-shrink-0">
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
           <span className="truncate">{section}</span>
