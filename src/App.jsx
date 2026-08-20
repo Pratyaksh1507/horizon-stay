@@ -9,6 +9,7 @@ import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import FullPageLoader from "./ui/FullPageLoader";
 import { DarkModeProvider } from "./context/DarkModeContext";
+import { SidebarProvider } from "./context/SidebarContext";
 
 // Lazy-loaded routes for code-splitting and ultra-fast initial page loads
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -38,63 +39,65 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <DarkModeProvider>
-      <QueryClientProvider client={queryClient}>
-        {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
-        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-          <AnimatePresence mode="wait">
-            <Suspense fallback={<FullPageLoader />}>
-              <Routes>
-                <Route path="/welcome" element={<LandingPage />} />
-                <Route
-                  element={
-                    <ProtectedRoute>
-                      <AppLayout />
-                    </ProtectedRoute>
-                  }
-                >
-                  <Route index element={<Navigate replace to="dashboard" />} />
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="bookings" element={<Bookings />} />
-                  <Route path="bookings/:bookingId" element={<Booking />} />
-                  <Route path="checkin/:bookingId" element={<Checkin />} />
-                  <Route path="cabins" element={<Cabins />} />
-                  <Route path="users" element={<Users />} />
-                  <Route path="settings" element={<Settings />} />
-                  <Route path="account" element={<Account />} />
-                  <Route path="new-booking" element={<NewBooking />} />
-                  <Route path="help" element={<HelpCenter />} />
-                </Route>
-                <Route path="login" element={<Login />} />
-                <Route path="*" element={<PageNotFound />} />
-              </Routes>
-            </Suspense>
-          </AnimatePresence>
-        </BrowserRouter>
+      <SidebarProvider>
+        <QueryClientProvider client={queryClient}>
+          {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+            <AnimatePresence mode="wait">
+              <Suspense fallback={<FullPageLoader />}>
+                <Routes>
+                  <Route path="/welcome" element={<LandingPage />} />
+                  <Route
+                    element={
+                      <ProtectedRoute>
+                        <AppLayout />
+                      </ProtectedRoute>
+                    }
+                  >
+                    <Route index element={<Navigate replace to="dashboard" />} />
+                    <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="bookings" element={<Bookings />} />
+                    <Route path="bookings/:bookingId" element={<Booking />} />
+                    <Route path="checkin/:bookingId" element={<Checkin />} />
+                    <Route path="cabins" element={<Cabins />} />
+                    <Route path="users" element={<Users />} />
+                    <Route path="settings" element={<Settings />} />
+                    <Route path="account" element={<Account />} />
+                    <Route path="new-booking" element={<NewBooking />} />
+                    <Route path="help" element={<HelpCenter />} />
+                  </Route>
+                  <Route path="login" element={<Login />} />
+                  <Route path="*" element={<PageNotFound />} />
+                </Routes>
+              </Suspense>
+            </AnimatePresence>
+          </BrowserRouter>
 
-        <Toaster
-          position="top-right"
-          gutter={12}
-          containerStyle={{ margin: "8px" }}
-          toastOptions={{
-            success: {
-              duration: 3000,
-            },
-            error: {
-              duration: 5000,
-            },
-            style: {
-              fontSize: "1.4rem",
-              maxWidth: "500px",
-              padding: "1.2rem 1.6rem",
-              backgroundColor: "#18181b",
-              color: "#fafafa",
-              border: "1px solid #27272a",
-              borderRadius: "14px",
-              boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)",
-            },
-          }}
-        />
-      </QueryClientProvider>
+          <Toaster
+            position="top-right"
+            gutter={12}
+            containerStyle={{ margin: "8px" }}
+            toastOptions={{
+              success: {
+                duration: 3000,
+              },
+              error: {
+                duration: 5000,
+              },
+              style: {
+                fontSize: "1.4rem",
+                maxWidth: "500px",
+                padding: "1.2rem 1.6rem",
+                backgroundColor: "#18181b",
+                color: "#fafafa",
+                border: "1px solid #27272a",
+                borderRadius: "14px",
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)",
+              },
+            }}
+          />
+        </QueryClientProvider>
+      </SidebarProvider>
     </DarkModeProvider>
   );
 }
