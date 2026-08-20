@@ -1,4 +1,5 @@
 import { HiSquare2Stack, HiPencil, HiTrash } from "react-icons/hi2";
+import { Users } from "lucide-react";
 import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./useDeleteCabin";
 import { useCreateCabin } from "./useCreateCabin";
@@ -33,27 +34,59 @@ function CabinRow({ cabin }) {
     });
   }
 
+  const effectivePrice = regularPrice - (discount || 0);
+
   return (
     <Table.Row>
-      <img
-        src={image}
-        alt={name}
-        className="block w-16 aspect-[3/2] object-cover object-center scale-150 -translate-x-[7px]"
-      />
-      <div className="text-[1.5rem] font-semibold text-zinc-200 font-mono">
-        {name}
+      {/* Thumbnail */}
+      <div className="relative group/thumb overflow-hidden rounded-xl w-20 h-14 border border-zinc-800 flex-shrink-0">
+        <img
+          src={image}
+          alt={name}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "/images/cabin-001.jpg";
+          }}
+          className="w-full h-full object-cover object-center transition-transform duration-300 group-hover/thumb:scale-110"
+        />
       </div>
-      <div className="text-zinc-400">Fits up to {maxCapacity} guests</div>
-      <div className="font-mono font-semibold text-zinc-200">
-        {formatCurrency(regularPrice)}
+
+      {/* Cabin Name */}
+      <div className="font-bold text-zinc-100 text-[1.55rem]">
+        Cabin <span className="font-mono text-amber-400">{name}</span>
       </div>
-      {discount ? (
-        <div className="font-mono font-medium text-emerald-400">
-          {formatCurrency(discount)}
-        </div>
-      ) : (
-        <span className="text-zinc-500">&mdash;</span>
-      )}
+
+      {/* Capacity */}
+      <div className="flex items-center gap-1.5 text-zinc-400 text-[1.3rem]">
+        <Users className="w-4 h-4 text-zinc-500" />
+        <span>Up to {maxCapacity} guests</span>
+      </div>
+
+      {/* Pricing with Discount */}
+      <div className="flex flex-col">
+        <span className="font-bold text-zinc-100 text-[1.5rem] tabular-nums">
+          {formatCurrency(effectivePrice)}
+          <span className="text-[1.2rem] font-normal text-zinc-500 ml-1">/night</span>
+        </span>
+        {discount > 0 && (
+          <span className="text-zinc-500 line-through text-[1.15rem] tabular-nums">
+            {formatCurrency(regularPrice)}
+          </span>
+        )}
+      </div>
+
+      {/* Discount Badge */}
+      <div>
+        {discount ? (
+          <span className="px-2.5 py-1 rounded-md text-[1.15rem] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            -${discount} Off
+          </span>
+        ) : (
+          <span className="text-zinc-600 text-[1.3rem]">&mdash;</span>
+        )}
+      </div>
+
+      {/* Action Menu */}
       <div>
         <Modal>
           <Menus.Menu>
@@ -74,7 +107,7 @@ function CabinRow({ cabin }) {
             </Modal.Window>
             <Modal.Window name="delete">
               <ConfirmDelete
-                resourceName="cabins"
+                resourceName="cabin"
                 disabled={isDeleting}
                 onConfirm={() => deleteCabin(cabinId)}
               />

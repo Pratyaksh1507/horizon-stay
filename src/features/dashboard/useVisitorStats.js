@@ -5,34 +5,47 @@ const COUNTRY_NAME_MAPPING = {
   "Great Britain": "United Kingdom",
   "USA": "United States of America",
   "United States": "United States of America",
+  "South Korea": "Korea, Republic of",
 };
 
-export function useVisitorStats(confirmedStays = []) {
+export function useVisitorStats(staysList = []) {
   const { visitorsByCountry, visitorCounts } = useMemo(() => {
     const stats = {};
-    confirmedStays.forEach((stay) => {
-      let nationality = stay.guests?.nationality;
+    staysList.forEach((stay) => {
+      let nationality = stay.guests?.nationality || stay.nationality;
       if (!nationality) return;
 
       if (COUNTRY_NAME_MAPPING[nationality]) {
         nationality = COUNTRY_NAME_MAPPING[nationality];
       }
 
-      // Count 1 unique visitor group per stay
-      stats[nationality] = (stats[nationality] || 0) + 1;
+      // Count unique guests or groups
+      stats[nationality] = (stats[nationality] || 0) + (stay.numGuests || 1);
     });
 
     const counts = Object.values(stats);
     return { visitorsByCountry: stats, visitorCounts: counts };
-  }, [confirmedStays]);
+  }, [staysList]);
 
   const visitorStats = useMemo(() => {
     const total = visitorCounts.reduce((sum, val) => sum + val, 0);
     return {
-      trend: 0, // In a real app with historical data, calculate percentage change here
+      trend: 0,
       total,
     };
   }, [visitorCounts]);
+
+  const topCountries = useMemo(() => {
+    const total = visitorStats.total || 1;
+    return Object.entries(visitorsByCountry)
+      .map(([country, count]) => ({
+        country,
+        count,
+        percentage: Math.round((count / total) * 100),
+      }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+  }, [visitorsByCountry, visitorStats.total]);
 
   const getVisitorColor = useCallback((feature) => {
     const name = feature.properties?.name;
@@ -41,18 +54,18 @@ export function useVisitorStats(confirmedStays = []) {
     const visitors = visitorsByCountry[name] || visitorsByCountry[mappedName];
 
     if (!visitors) {
-      return "var(--color-zinc-800)";
+      return "var(--color-zinc-850, #202024)";
     }
 
     const max = Math.max(...visitorCounts, 1);
     
-    // Dynamic grayscale tiers based on max visitors in current period
-    if (visitors >= max * 0.8) return "var(--color-zinc-300)";
-    if (visitors >= max * 0.6) return "var(--color-zinc-400)";
-    if (visitors >= max * 0.4) return "var(--color-zinc-500)";
-    if (visitors >= max * 0.2) return "var(--color-zinc-600)";
+    // Dynamic warm gold/amber gradient for visitor density
+    if (visitors >= max * 0.75) return "#f59e0b"; // Vibrant Amber 500
+    if (visitors >= max * 0.5) return "#fbbf24";  // Warm Amber 400
+    if (visitors >= max * 0.25) return "#d97706"; // Deep Amber 600
+    if (visitors >= max * 0.1) return "#b45309";  // Amber 700
     
-    return "var(--color-zinc-700)";
+    return "#92400e";
   }, [visitorsByCountry, visitorCounts]);
 
   const getVisitorValue = useCallback((feature) => {
@@ -71,6 +84,7 @@ export function useVisitorStats(confirmedStays = []) {
   return {
     visitorsByCountry,
     visitorStats,
+    topCountries,
     getVisitorColor,
     getVisitorValue,
     computeVisitorTrend,

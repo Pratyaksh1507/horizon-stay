@@ -16,15 +16,24 @@ function Cabins() {
       initial="initial"
       animate="animate"
       exit="exit"
+      className="flex flex-col gap-6"
     >
-      <div className="flex items-center justify-between mb-2">
-        <h1 className="text-[2.2rem] font-bold text-zinc-100 tracking-tight">
-          All cabins
-        </h1>
-        <CabinTableOperations />
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-zinc-800/80">
+        <div>
+          <h1 className="text-[2.6rem] font-bold text-zinc-100 tracking-tight">
+            Resort Cabins & Suites
+          </h1>
+          <p className="text-[1.3rem] text-zinc-400 mt-0.5">
+            Configure luxury unit inventory, base pricing, capacities, and seasonal discounts.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <CabinTableOperations />
+          <AddCabin />
+        </div>
       </div>
+
       <CabinTable />
-      <AddCabin />
     </motion.div>
   );
 }

@@ -13,7 +13,7 @@ function CabinTable() {
   if (!cabins.length)
     return (
       <p className="text-[1.5rem] font-medium text-center my-6 text-zinc-500">
-        No cabins to show at the moment
+        No cabins available at the moment.
       </p>
     );
 
@@ -26,21 +26,24 @@ function CabinTable() {
   if (filterValue === "with-discount")
     filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
 
-  const sortBy = searchParams.get("sortBy") || "startDate-asc";
+  const sortBy = searchParams.get("sortBy") || "name-asc";
   const [field, direction] = sortBy.split("-");
   const modifier = direction === "asc" ? 1 : -1;
-  const sortedCabins = filteredCabins.sort(
-    (a, b) => (a[field] - b[field]) * modifier
-  );
+  const sortedCabins = [...filteredCabins].sort((a, b) => {
+    if (typeof a[field] === "string") {
+      return a[field].localeCompare(b[field]) * modifier;
+    }
+    return (Number(a[field] || 0) - Number(b[field] || 0)) * modifier;
+  });
 
   return (
     <Menus>
-      <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+      <Table columns="0.8fr 1.6fr 1.8fr 1.6fr 1.2fr 3.2rem">
         <Table.Header>
-          <div></div>
-          <div>Cabin</div>
+          <div>Preview</div>
+          <div>Unit Name</div>
           <div>Capacity</div>
-          <div>Price</div>
+          <div>Nightly Rate</div>
           <div>Discount</div>
           <div></div>
         </Table.Header>

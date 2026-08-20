@@ -101,10 +101,10 @@ function Sidebar() {
       >
         <Link
           to="/new-booking"
-          className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-[1.35rem] font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-600/25 no-underline"
+          className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 text-[1.35rem] font-bold shadow-lg shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5 no-underline"
         >
           <HiOutlinePlus className="w-5 h-5" />
-          New Booking
+          New Reservation
         </Link>
         <Link
           to="/help"

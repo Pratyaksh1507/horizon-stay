@@ -14,10 +14,17 @@ function Settings() {
       initial="initial"
       animate="animate"
       exit="exit"
+      className="flex flex-col gap-6 max-w-[110rem] mx-auto pb-12"
     >
-      <h1 className="text-[2.2rem] font-bold text-zinc-100 tracking-tight mb-2">
-        Update hotel settings
-      </h1>
+      <div className="pb-2 border-b border-zinc-800/80">
+        <h1 className="text-[2.6rem] font-bold text-zinc-100 tracking-tight">
+          Resort Policy & Global Settings
+        </h1>
+        <p className="text-[1.3rem] text-zinc-400 mt-0.5">
+          Fine-tune reservation limits, dining rates, and capacity thresholds across the property.
+        </p>
+      </div>
+
       <UpdateSettingsForm />
     </motion.div>
   );

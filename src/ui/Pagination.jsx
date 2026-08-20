@@ -27,33 +27,33 @@ function Pagination({ count }) {
 
   return (
     <div className="w-full flex items-center justify-between">
-      <p className="text-[1.35rem] ml-2 text-zinc-400">
-        Showing <span className="font-semibold text-zinc-200">{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
-        <span className="font-semibold text-zinc-200">
+      <p className="text-[1.3rem] ml-1 text-zinc-400">
+        Showing <span className="font-bold text-zinc-200">{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
+        <span className="font-bold text-zinc-200">
           {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
         </span>{" "}
-        of <span className="font-semibold text-zinc-200">{count}</span> results
+        of <span className="font-bold text-amber-400">{count}</span> records
       </p>
       <div className="flex gap-2">
         <motion.button
           onClick={prevPage}
           disabled={currentPage === 1}
-          className="flex items-center gap-1 px-3 py-1.5 rounded-lg font-medium text-[1.35rem] bg-zinc-800 text-zinc-300 hover:bg-brand-600 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-1 px-3.5 py-1.5 rounded-xl font-semibold text-[1.3rem] bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-amber-500 hover:text-zinc-950 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           whileHover={{ scale: currentPage === 1 ? 1 : 1.02 }}
           whileTap={{ scale: currentPage === 1 ? 1 : 0.98 }}
         >
-          <HiChevronLeft className="w-5 h-5" />
+          <HiChevronLeft className="w-4 h-4" />
           <span>Previous</span>
         </motion.button>
         <motion.button
           onClick={nextPage}
           disabled={currentPage === pageCount}
-          className="flex items-center gap-1 px-3 py-1.5 rounded-lg font-medium text-[1.35rem] bg-zinc-800 text-zinc-300 hover:bg-brand-600 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-1 px-3.5 py-1.5 rounded-xl font-semibold text-[1.3rem] bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-amber-500 hover:text-zinc-950 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           whileHover={{ scale: currentPage === pageCount ? 1 : 1.02 }}
           whileTap={{ scale: currentPage === pageCount ? 1 : 0.98 }}
         >
           <span>Next</span>
-          <HiChevronRight className="w-5 h-5" />
+          <HiChevronRight className="w-4 h-4" />
         </motion.button>
       </div>
     </div>

@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCurrentUser } from "../../services/apiAuth";
+import { mockGetCurrentUser, initMockData } from "../../data/mockData";
+
+initMockData();
 
 export function useUser() {
   const { data: user, isLoading } = useQuery({
     queryKey: ["user"],
-    queryFn: getCurrentUser,
+    queryFn: mockGetCurrentUser,
   });
 
   return { user, isLoading, isAuthenticated: Boolean(user) };

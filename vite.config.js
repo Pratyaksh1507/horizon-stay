@@ -18,4 +18,21 @@ export default defineConfig({
       lib: path.resolve(__dirname, "src/lib"),
     },
   },
+  build: {
+    target: "esnext",
+    minify: "esbuild",
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom", "react-router-dom"],
+          "vendor-query": ["@tanstack/react-query"],
+          "vendor-motion": ["framer-motion"],
+          "vendor-charts": ["recharts"],
+          "vendor-icons": ["lucide-react", "react-icons"],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 800,
+  },
 });

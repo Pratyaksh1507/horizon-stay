@@ -6,7 +6,7 @@ function Table({ columns, children }) {
   return (
     <TableContext.Provider value={{ columns }}>
       <div
-        className="border border-zinc-800 text-[1.35rem] bg-zinc-900 rounded-xl overflow-hidden"
+        className="border border-zinc-800/90 text-[1.35rem] bg-zinc-900/90 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl"
         role="table"
       >
         {children}
@@ -20,7 +20,7 @@ function Header({ children }) {
   return (
     <div
       role="row"
-      className="grid items-center py-4 px-6 bg-zinc-800/50 border-b border-zinc-800 uppercase tracking-wide font-semibold text-zinc-400 text-[1.15rem]"
+      className="grid items-center py-4 px-6 bg-zinc-950/80 border-b border-zinc-800/90 uppercase tracking-wider font-bold text-zinc-400 text-[1.15rem]"
       style={{ gridTemplateColumns: columns }}
     >
       {children}
@@ -33,7 +33,7 @@ function Row({ children }) {
   return (
     <div
       role="row"
-      className="grid items-center py-3 px-6 not-last:border-b border-zinc-800 hover:bg-zinc-800/30 transition-colors duration-150"
+      className="grid items-center py-3.5 px-6 border-b border-zinc-800/60 last:border-b-0 hover:bg-zinc-800/40 transition-colors duration-150"
       style={{ gridTemplateColumns: columns }}
     >
       {children}
@@ -44,16 +44,16 @@ function Row({ children }) {
 function Body({ data = [], render }) {
   if (!data.length)
     return (
-      <p className="text-[1.5rem] font-medium text-center my-6 text-zinc-500">
-        No data to show at the moment
-      </p>
+      <div className="py-12 text-center text-zinc-500 text-[1.4rem]">
+        No records found matching current criteria.
+      </div>
     );
-  return <section className="my-1">{data.map(render)}</section>;
+  return <section className="divide-y divide-zinc-800/60">{data.map(render)}</section>;
 }
 
 function Footer({ children }) {
   return (
-    <footer className="bg-zinc-800/40 p-3 flex justify-center empty:hidden">
+    <footer className="bg-zinc-950/60 border-t border-zinc-800/80 p-4 flex justify-center empty:hidden">
       {children}
     </footer>
   );

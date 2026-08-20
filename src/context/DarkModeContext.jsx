@@ -8,12 +8,15 @@ function DarkModeProvider({ children }) {
 
   useEffect(
     function () {
+      const root = document.documentElement;
       if (isDarkMode) {
-        document.documentElement.classList.add("dark-mode");
-        document.documentElement.classList.remove("light-mode");
+        root.classList.add("dark", "dark-mode");
+        root.classList.remove("light", "light-mode");
+        root.style.colorScheme = "dark";
       } else {
-        document.documentElement.classList.add("light-mode");
-        document.documentElement.classList.remove("dark-mode");
+        root.classList.add("light", "light-mode");
+        root.classList.remove("dark", "dark-mode");
+        root.style.colorScheme = "light";
       }
     },
     [isDarkMode]
